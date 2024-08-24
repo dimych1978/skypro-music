@@ -1,41 +1,65 @@
+// 'use client';
+import React from 'react';
 import styles from './Playlist.module.css';
+import { TrackType } from '@/types';
 
-const Playlist = () => {
+type PlayListProps = {
+  tracks: TrackType[];
+};
+
+const Playlist: React.FC<PlayListProps> = ({ tracks }) => {
+  const unique = tracks.reduce<TrackType[]>((accumulator, current) => {
+    if (
+      accumulator.findIndex(
+        (object: TrackType) => object._id === current._id
+      ) === -1
+    ) {
+      accumulator.push(current);
+    }
+    return accumulator;
+  }, []);
+
   return (
     <div className={`${styles.contentPlaylist} playlist`}>
-      <div className={styles.playlistItem}>
-        <div className={styles.playlistTrack}>
-          <div className={styles.trackTitle}>
-            <div className={styles.trackTitleImage}>
-              <svg className={styles.trackTitleSvg}>
-                <use xlinkHref='/img/icon/sprite.svg#icon-note'></use>
-              </svg>
+      {tracks.map(track => (
+        <div key={track._id}>
+          <div className={styles.playlistItem}>
+            <div className={styles.playlistTrack}>
+              <div className={styles.trackTitle}>
+                <div className={styles.trackTitleImage}>
+                  <svg className={styles.trackTitleSvg}>
+                    <use xlinkHref='/img/icon/sprite.svg#icon-note'></use>
+                  </svg>
+                </div>
+                <div className='track__title-text'>
+                  <a className={styles.trackTitleLink} href='http://'>
+                    {track.author}{' '}
+                    <span className={styles.trackTitleSpan}></span>
+                  </a>
+                </div>
+              </div>
+              <div className={styles.trackAuthor}>
+                <a className={styles.trackAuthorLink} href='http://'>
+                  {track.album}
+                </a>
+              </div>
+              <div className={styles.trackAlbum}>
+                <a className={styles.trackAlbumLink} href='http://'>
+                  {track.name}
+                </a>
+              </div>
+              <div className={'track__time'}>
+                <svg className={styles.trackTimeSvg}>
+                  <use xlinkHref='/img/icon/sprite.svg#icon-like'></use>
+                </svg>
+                <span className={styles.trackTimeText}>
+                  {track.duration_in_seconds}
+                </span>
+              </div>
             </div>
-            <div className='track__title-text'>
-              <a className={styles.trackTitleLink} href='http://'>
-                Guilt <span className={styles.trackTitleSpan}></span>
-              </a>
-            </div>
-          </div>
-          <div className={styles.trackAuthor}>
-            <a className={styles.trackAuthorLink} href='http://'>
-              Nero
-            </a>
-          </div>
-          <div className={styles.trackAlbum}>
-            <a className={styles.trackAlbumLink} href='http://'>
-              Welcome Reality
-            </a>
-          </div>
-          <div className='track__time'>
-            <svg className={styles.trackTimeSvg}>
-              <use xlinkHref='/img/icon/sprite.svg#icon-like'></use>
-            </svg>
-            <span className={styles.trackTimeText}>4:44</span>
           </div>
         </div>
-      </div>
-
+      ))}
       <div className={styles.playlistItem}>
         <div className={styles.playlistTrack}>
           <div className={styles.trackTitle}>

@@ -1,7 +1,12 @@
 import styles from './Content.module.css';
-import Playlist from './PlayList/Playlist';
+import Playlist from '../PlayList/Playlist';
+import { TrackType } from '@/types';
 
-const Content = () => {
+type ContentProps = {
+  tracks: TrackType[];
+};
+
+const Content: React.FC<ContentProps> = ({ tracks }) => {
   return (
     <div className={`${styles.centerblockContent} playlist-content`}>
       <div className={`${styles.contentTitle} playlist-title`}>
@@ -14,7 +19,7 @@ const Content = () => {
           </svg>
         </div>
       </div>
-      <Playlist />
+      <Playlist tracks={tracks} />
     </div>
   );
 };
