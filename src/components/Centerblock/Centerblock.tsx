@@ -15,7 +15,7 @@ const Centerblock = async () => {
   } catch (error: unknown) {
     if (error instanceof Error) {
       ('use server');
-      return <ErrorPage error={error.message} reset={() => {}} />;
+      return <ErrorPage error={error.message} reset={(() => {})()} />;
     }
   }
 

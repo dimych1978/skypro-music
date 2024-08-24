@@ -8,7 +8,7 @@ export default function ErrorPage({
   reset,
 }: {
   error: (Error & { digest?: string }) | unknown;
-  reset: () => void;
+  reset: void;
 }) {
   useEffect(() => {
     console.error(error);
@@ -17,7 +17,7 @@ export default function ErrorPage({
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Что-то пошло не так</h2>
-      <button className={styles.button} onClick={reset}>
+      <button className={styles.button} onClick={() => reset}>
         Попробовать снова
       </button>
     </div>
