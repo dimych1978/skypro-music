@@ -5,26 +5,19 @@ import { TrackType } from '@/types';
 
 type PlayListProps = {
   tracks: TrackType[];
+  setThisTrack: (track: TrackType) => void;
 };
 
-const Playlist: React.FC<PlayListProps> = ({ tracks }) => {
-  const unique = tracks.reduce<TrackType[]>((accumulator, current) => {
-    if (
-      accumulator.findIndex(
-        (object: TrackType) => object._id === current._id
-      ) === -1
-    ) {
-      accumulator.push(current);
-    }
-    return accumulator;
-  }, []);
-
+const Playlist: React.FC<PlayListProps> = ({ tracks, setThisTrack }) => {
+  const handle = (track: TrackType) => {
+    setThisTrack(track);
+  };
   return (
     <div className={`${styles.contentPlaylist} playlist`}>
       {tracks.map(track => (
         <div key={track._id}>
           <div className={styles.playlistItem}>
-            <div className={styles.playlistTrack}>
+            <div className={styles.playlistTrack} onClick={() => handle(track)}>
               <div className={styles.trackTitle}>
                 <div className={styles.trackTitleImage}>
                   <svg className={styles.trackTitleSvg}>
@@ -32,19 +25,28 @@ const Playlist: React.FC<PlayListProps> = ({ tracks }) => {
                   </svg>
                 </div>
                 <div className='track__title-text'>
-                  <a className={styles.trackTitleLink} href='http://'>
-                    {track.author}{' '}
+                  <a
+                    className={styles.trackTitleLink}
+                    // href='http://'
+                  >
+                    {track.author}
                     <span className={styles.trackTitleSpan}></span>
                   </a>
                 </div>
               </div>
               <div className={styles.trackAuthor}>
-                <a className={styles.trackAuthorLink} href='http://'>
+                <a
+                  className={styles.trackAuthorLink}
+                  //  href='http://'
+                >
                   {track.album}
                 </a>
               </div>
               <div className={styles.trackAlbum}>
-                <a className={styles.trackAlbumLink} href='http://'>
+                <a
+                  className={styles.trackAlbumLink}
+                  // href='http://'
+                >
                   {track.name}
                 </a>
               </div>
@@ -60,7 +62,7 @@ const Playlist: React.FC<PlayListProps> = ({ tracks }) => {
           </div>
         </div>
       ))}
-      <div className={styles.playlistItem}>
+      {/* <div className={styles.playlistItem}>
         <div className={styles.playlistTrack}>
           <div className={styles.trackTitle}>
             <div className={styles.trackTitleImage}>
@@ -298,7 +300,7 @@ const Playlist: React.FC<PlayListProps> = ({ tracks }) => {
             <span className={styles.trackTimeText}>3:41</span>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* <div className='playlist__item'>
         <div className='playlist__track track'>
