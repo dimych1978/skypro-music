@@ -1,0 +1,17 @@
+.container {
+  text-align: center;
+  margin-top: 50vh;
+}
+
+.title {
+  color: red;
+}
+
+.button {
+  font-size: 24px;
+  padding: 6px;
+  margin-top: 20px;
+  background-color: darkgray;
+  border-radius: 10px;
+  box-shadow: 6px 4px black;
+}

@@ -1,7 +1,16 @@
+'use client';
+
 import Image from 'next/image';
 import styles from './Nav.module.css';
+import React from 'react';
 
 export const Nav = () => {
+  const [display, setDisplay] = React.useState<string>('none');
+
+  const hideDisplay: React.MouseEventHandler<HTMLDivElement> = () => {
+    setDisplay(display === 'inline-block' ? 'none' : 'inline-block');
+  };
+
   return (
     <nav className={styles.mainNav}>
       <div className={styles.navLogo}>
@@ -13,12 +22,12 @@ export const Nav = () => {
           height={170}
         />
       </div>
-      <div className={styles.navBurger}>
+      <div className={styles.navBurger} onClick={hideDisplay}>
         <span className={styles.burgerLine}></span>
         <span className={styles.burgerLine}></span>
         <span className={styles.burgerLine}></span>
       </div>
-      <div className={styles.navMenu}>
+      <div className={styles.navMenu} style={{ display: display }}>
         <ul className={styles.menuList}>
           <li className={styles.menuItem}>
             <a href='#' className={styles.menuLink}>
