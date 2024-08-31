@@ -4,9 +4,10 @@ import { TrackType } from '@/types';
 
 type ContentProps = {
   tracks: TrackType[];
+  setThisTrack: (track: TrackType) => void;
 };
 
-const Content: React.FC<ContentProps> = ({ tracks }) => {
+const Content: React.FC<ContentProps> = ({ tracks, setThisTrack }) => {
   return (
     <div className={`${styles.centerblockContent} playlist-content`}>
       <div className={`${styles.contentTitle} playlist-title`}>
@@ -19,7 +20,7 @@ const Content: React.FC<ContentProps> = ({ tracks }) => {
           </svg>
         </div>
       </div>
-      <Playlist tracks={tracks} />
+      <Playlist tracks={tracks} setThisTrack={setThisTrack} />
     </div>
   );
 };
