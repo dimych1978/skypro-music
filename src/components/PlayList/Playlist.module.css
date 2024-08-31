@@ -1,3 +1,16 @@
+@keyframes flickering {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+
+  25%,
+  75% {
+    opacity: 0.5;
+  }
+}
+
 .contentPlaylist {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -69,6 +82,18 @@
   stroke: #4e4e4e;
 }
 
+.trackTitleActive,
+.trackTitleActivePlaying {
+  width: 16px;
+  height: 16px;
+  border-radius: 50px;
+  background: #b672ff;
+}
+
+.trackTitleActivePlaying {
+  animation: flickering 2s ease 0s infinite normal forwards;
+}
+
 .trackTitleLink {
   font-style: normal;
   font-weight: 400;
@@ -117,22 +142,18 @@
 }
 
 .trackTimeSvg {
-    width: 14px;
-    height: 12px;
-    margin-right: 17px;
-    fill: transparent;
-    stroke: #696969;
-  }
+  width: 14px;
+  height: 12px;
+  margin-right: 17px;
+  fill: transparent;
+  stroke: #696969;
+}
 
-  .trackTimeText {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    text-align: right;
-    color: #696969;
-  }
-  
-  
-  
-  
+.trackTimeText {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: right;
+  color: #696969;
+}

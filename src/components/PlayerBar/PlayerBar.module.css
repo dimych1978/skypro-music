@@ -1,5 +1,5 @@
 .bar {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -138,11 +138,16 @@
   align-items: center;
 }
 
-.playerBtnShuffleSvg {
+.playerBtnShuffleSvg,
+.playerBtnShuffleSvgActive {
   width: 19px;
   height: 12px;
   fill: transparent;
   stroke: #696969;
+}
+
+.playerBtnShuffleSvgActive {
+  stroke: #fff;
 }
 
 .playerTrackPlay {
