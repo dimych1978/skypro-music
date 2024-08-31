@@ -2,12 +2,12 @@ import styles from './Content.module.css';
 import Playlist from '../PlayList/Playlist';
 import { TrackType } from '@/types';
 
-type ContentProps = {
-  tracks: TrackType[];
-  setThisTrack: (track: TrackType) => void;
-};
+// type ContentProps = {
+//   tracks: TrackType[];
+//   setThisTrack: (track: TrackType) => void;
+// };
 
-const Content: React.FC<ContentProps> = ({ tracks, setThisTrack }) => {
+const Content = () => {
   return (
     <div className={`${styles.centerblockContent} playlist-content`}>
       <div className={`${styles.contentTitle} playlist-title`}>
@@ -20,7 +20,7 @@ const Content: React.FC<ContentProps> = ({ tracks, setThisTrack }) => {
           </svg>
         </div>
       </div>
-      <Playlist tracks={tracks} setThisTrack={setThisTrack} />
+      <Playlist />
     </div>
   );
 };

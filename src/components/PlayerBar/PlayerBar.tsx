@@ -3,28 +3,45 @@
 import { TrackType } from '@/types';
 import styles from './PlayerBar.module.css';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import ProgressBar from './ProgressBar';
+import { ProgressBar, Time } from './ProgressBar';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+import {
+  setIsPlaying,
+  setIsShuffle,
+  setNextTrack,
+  setPreviousTrack,
+  setShuffle,
+} from '@/store/features/trackSlice';
 
 type props = { thisTrack: TrackType };
 
 const PlayerBar = ({ thisTrack }: props) => {
   const { name, author, track_file } = thisTrack;
+  const { isShuffle, isPlaying } = useAppSelector(state => state.tracksSlice);
+  const dispatch = useAppDispatch();
+  const ref = useRef<HTMLAudioElement>(null!);
 
-  const ref = useRef<HTMLAudioElement | null>(null);
-
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [playPauseIcon, setPlayPauseIcon] = useState<string>(
-    '/img/icon/sprite.svg#icon-play'
-  );
   const [repeat, setRepeat] = useState(false);
 
+  const next = () => {
+    dispatch(setNextTrack());
+  };
+
+  const previous = () => {
+    dispatch(setPreviousTrack());
+  };
+
+  const toggleShuffle = () => {
+    dispatch(setIsShuffle(!isShuffle));
+  };
+
+  useEffect(() => {
+    isShuffle && dispatch(setShuffle());
+  }, [isShuffle]);
+
   const handlePlay = () => {
-    !isPlaying
-      ? (ref.current?.play(),
-        setPlayPauseIcon('/img/icon/sprite.svg#icon-pause'))
-      : (ref.current?.pause(),
-        setPlayPauseIcon('/img/icon/sprite.svg#icon-play'));
-    setIsPlaying(!isPlaying);
+    dispatch(setIsPlaying(!isPlaying));
+    !isPlaying ? ref.current?.play() : ref.current?.pause();
   };
 
   const handleVolume = (e: ChangeEvent<HTMLInputElement>) => {
@@ -36,15 +53,12 @@ const PlayerBar = ({ thisTrack }: props) => {
   };
 
   useEffect(() => {
-    setIsPlaying(true);
-    setPlayPauseIcon('/img/icon/sprite.svg#icon-pause');
     ref.current?.play();
+    dispatch(setIsPlaying(true));
   }, [thisTrack]);
 
   const handleEnd = () => {
-    setIsPlaying(false);
-    if (ref.current) ref.current.currentTime = 0;
-    setPlayPauseIcon('/img/icon/sprite.svg#icon-play');
+    dispatch(setNextTrack());
   };
 
   useEffect(() => {
@@ -63,14 +77,11 @@ const PlayerBar = ({ thisTrack }: props) => {
         onEnded={handleEnd}
       />
       <div className={styles.barContent}>
-        {thisTrack && <ProgressBar track={ref} />}
+        {thisTrack && <ProgressBar track={ref.current} />}
         <div className={styles.barPlayerBlock}>
           <div className={styles.barPlayer}>
             <div className={styles.playerControls}>
-              <div
-                className={`${styles.playerBtnPrev} btn`}
-                onClick={() => alert('Еще не реализовано')}
-              >
+              <div className={`${styles.playerBtnPrev} btn`} onClick={previous}>
                 <svg className={styles.playerBtnPrevSvg}>
                   <use xlinkHref='/img/icon/sprite.svg#icon-prev'></use>
                 </svg>
@@ -80,13 +91,16 @@ const PlayerBar = ({ thisTrack }: props) => {
                 onClick={handlePlay}
               >
                 <svg className={styles.playerBtnPlaySvg}>
-                  <use xlinkHref={playPauseIcon}></use>
+                  <use
+                    xlinkHref={
+                      !isPlaying
+                        ? '/img/icon/sprite.svg#icon-play'
+                        : '/img/icon/sprite.svg#icon-pause '
+                    }
+                  ></use>
                 </svg>
               </div>
-              <div
-                className={`${styles.playerBtnNext} btn`}
-                onClick={() => alert('Еще не реализовано')}
-              >
+              <div className={`${styles.playerBtnNext} btn`} onClick={next}>
                 <svg className={styles.playerBtnNextSvg}>
                   <use xlinkHref='/img/icon/sprite.svg#icon-next'></use>
                 </svg>
@@ -107,14 +121,19 @@ const PlayerBar = ({ thisTrack }: props) => {
               </div>
               <div
                 className={`${styles.playerBtnShuffle} btnIcon`}
-                onClick={() => alert('Еще не реализовано')}
+                onClick={toggleShuffle}
               >
-                <svg className={styles.playerBtnShuffleSvg}>
+                <svg
+                  className={
+                    !isShuffle
+                      ? styles.playerBtnShuffleSvg
+                      : styles.playerBtnShuffleSvgActive
+                  }
+                >
                   <use xlinkHref='/img/icon/sprite.svg#icon-shuffle'></use>
                 </svg>
               </div>
             </div>
-
             <div className={styles.playerTrackPlay}>
               <div className={styles.trackPlayContain}>
                 <div className={styles.trackPlayImage}>
@@ -148,6 +167,7 @@ const PlayerBar = ({ thisTrack }: props) => {
               </div>
             </div>
           </div>
+          {thisTrack && <Time track={ref.current} />}
           <div className={styles.barVolumeBlock}>
             <div className={styles.volumeContent}>
               <div className={styles.volumeImage}>
