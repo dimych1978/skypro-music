@@ -3,7 +3,7 @@
 import { TrackType } from '@/types';
 import styles from './PlayerBar.module.css';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { ProgressBar } from './ProgressBar';
+import { ProgressBar, TrackTime } from './ProgressBar';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import {
   setIsPlaying,
@@ -15,6 +15,13 @@ import {
 
 type props = { thisTrack: TrackType };
 
+export type TimeType = {
+  min: number;
+  sec: number;
+  minDuration: number;
+  secDuration: number;
+};
+
 const PlayerBar = ({ thisTrack }: props) => {
   const { name, author, track_file } = thisTrack;
   const { isShuffle, isPlaying } = useAppSelector(state => state.tracksSlice);
@@ -23,6 +30,12 @@ const PlayerBar = ({ thisTrack }: props) => {
 
   const [backgroundBar, setBackgroundBar] = useState<string>('2e2e2e');
   const [widthBar, setWidthBar] = useState<number>(0);
+  const [time, setTime] = useState<TimeType>({
+    min: 0,
+    sec: 0,
+    minDuration: 0,
+    secDuration: 0,
+  });
 
   const [repeat, setRepeat] = useState(false);
 
@@ -71,6 +84,14 @@ const PlayerBar = ({ thisTrack }: props) => {
   }, [repeat]);
 
   if (ref.current) {
+    ref.current.oncanplay = () => {
+      setTime({
+        ...time,
+        minDuration: ref.current.duration / 60,
+        secDuration: ref.current.duration % 60,
+      });
+    };
+
     ref.current.ontimeupdate = () => {
       setWidthBar(
         ref.current.duration
@@ -78,7 +99,13 @@ const PlayerBar = ({ thisTrack }: props) => {
           : 0
       );
       setBackgroundBar('#B672FF');
+      setTime({
+        ...time,
+        min: Math.floor(ref.current.currentTime / 60),
+        sec: ref.current.currentTime % 60,
+      });
     };
+    console.log(ref.current.currentTime);
   }
 
   return (
@@ -97,6 +124,7 @@ const PlayerBar = ({ thisTrack }: props) => {
             backgroundBar={backgroundBar}
             setWidthBar={setWidthBar}
             setBackgroundBar={setBackgroundBar}
+            track={ref.current}
           />
         )}
         <div className={styles.barPlayerBlock}>
@@ -188,9 +216,7 @@ const PlayerBar = ({ thisTrack }: props) => {
               </div>
             </div>
           </div>
-          {/* {thisTrack && ( */}
-          {/* //   <Time track={ref.current} update={() => ref.current.ontimeupdate} /> */}
-          {/* )} */}
+          {thisTrack && <TrackTime time={time} />}
           <div className={styles.barVolumeBlock}>
             <div className={styles.volumeContent}>
               <div className={styles.volumeImage}>

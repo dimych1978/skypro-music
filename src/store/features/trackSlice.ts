@@ -59,7 +59,6 @@ const trackSlice = createSlice({
     },
 
     setShuffle: state => {
-      console.log('setShuffle');
       state.defaultTracks.sort(() => Math.random() - 0.5);
     },
 
