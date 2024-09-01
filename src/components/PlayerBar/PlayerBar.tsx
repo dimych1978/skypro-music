@@ -3,7 +3,7 @@
 import { TrackType } from '@/types';
 import styles from './PlayerBar.module.css';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { ProgressBar, Time } from './ProgressBar';
+import { ProgressBar } from './ProgressBar';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import {
   setIsPlaying,
@@ -20,6 +20,9 @@ const PlayerBar = ({ thisTrack }: props) => {
   const { isShuffle, isPlaying } = useAppSelector(state => state.tracksSlice);
   const dispatch = useAppDispatch();
   const ref = useRef<HTMLAudioElement>(null!);
+
+  const [backgroundBar, setBackgroundBar] = useState<string>('2e2e2e');
+  const [widthBar, setWidthBar] = useState<number>(0);
 
   const [repeat, setRepeat] = useState(false);
 
@@ -67,6 +70,17 @@ const PlayerBar = ({ thisTrack }: props) => {
       : (ref.current!.loop = false);
   }, [repeat]);
 
+  if (ref.current) {
+    ref.current.ontimeupdate = () => {
+      setWidthBar(
+        ref.current.duration
+          ? (ref.current.currentTime / ref.current.duration) * 100
+          : 0
+      );
+      setBackgroundBar('#B672FF');
+    };
+  }
+
   return (
     <div className={styles.bar}>
       <audio
@@ -77,7 +91,14 @@ const PlayerBar = ({ thisTrack }: props) => {
         onEnded={handleEnd}
       />
       <div className={styles.barContent}>
-        {thisTrack && <ProgressBar track={ref.current} />}
+        {thisTrack && (
+          <ProgressBar
+            widthBar={widthBar}
+            backgroundBar={backgroundBar}
+            setWidthBar={setWidthBar}
+            setBackgroundBar={setBackgroundBar}
+          />
+        )}
         <div className={styles.barPlayerBlock}>
           <div className={styles.barPlayer}>
             <div className={styles.playerControls}>
@@ -167,7 +188,9 @@ const PlayerBar = ({ thisTrack }: props) => {
               </div>
             </div>
           </div>
-          {thisTrack && <Time track={ref.current} />}
+          {/* {thisTrack && ( */}
+          {/* //   <Time track={ref.current} update={() => ref.current.ontimeupdate} /> */}
+          {/* )} */}
           <div className={styles.barVolumeBlock}>
             <div className={styles.volumeContent}>
               <div className={styles.volumeImage}>
