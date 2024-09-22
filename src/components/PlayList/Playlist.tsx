@@ -9,6 +9,7 @@ import TrackItem from '../TrackItem/TrackItem';
 
 const Playlist = () => {
   const { tracks } = useAppSelector(state => state.tracksSlice);
+  console.log('🚀 ~ Playlist ~ tracks:', tracks);
 
   return (
     <div className={`${styles.contentPlaylist} playlist`}>

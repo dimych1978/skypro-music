@@ -11,7 +11,6 @@ import { useAppSelector } from '@/store/store';
 
 export default function Home() {
   const { thisTrack } = useAppSelector(state => state.tracksSlice);
-  console.log('object');
 
   return (
     <div className={styles.wrapper}>
