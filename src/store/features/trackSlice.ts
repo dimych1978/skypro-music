@@ -1,5 +1,5 @@
 import { TrackType } from '@/types';
-import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type initialStateType = {
   tracks: TrackType[];
@@ -7,6 +7,8 @@ type initialStateType = {
   defaultTracks: TrackType[];
   isShuffle: boolean;
   isPlaying: boolean;
+  id: number | null;
+  isFav: number[];
 };
 
 const initialState: initialStateType = {
@@ -15,6 +17,8 @@ const initialState: initialStateType = {
   defaultTracks: [],
   isShuffle: false,
   isPlaying: false,
+  id: null,
+  isFav: [],
 };
 
 const trackSlice = createSlice({
@@ -28,6 +32,12 @@ const trackSlice = createSlice({
 
     setThisTrack: (state, action: PayloadAction<TrackType>) => {
       state.thisTrack = action.payload;
+    },
+
+    setFavTracks: (state, action: PayloadAction<TrackType[]>) => {
+      const arr: number[] = [];
+      action.payload.forEach(item => arr.push(item._id));
+      state.isFav = arr;
     },
 
     setIsPlaying: (state, action: PayloadAction<boolean>) => {
@@ -65,16 +75,27 @@ const trackSlice = createSlice({
     setIsShuffle: (state, action: PayloadAction<boolean>) => {
       state.isShuffle = action.payload;
     },
+
+    setLikeTracks: (state, action: PayloadAction<number>) => {
+      state.isFav.push(action.payload);
+    },
+
+    setDislikeTracks: (state, action: PayloadAction<number>) => {
+      state.isFav = state.isFav.filter(el => el !== action.payload);
+    },
   },
 });
 
 export const {
   setTrackState,
   setThisTrack,
+  setFavTracks,
   setNextTrack,
   setPreviousTrack,
   setShuffle,
   setIsShuffle,
   setIsPlaying,
+  setLikeTracks,
+  setDislikeTracks,
 } = trackSlice.actions;
 export const TrackReducer = trackSlice.reducer;

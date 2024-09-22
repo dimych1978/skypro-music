@@ -1,0 +1,174 @@
+@keyframes flash {
+  from {
+    color: red;
+  }
+  50% {
+    color: initial;
+  }
+  to {
+    color: red;
+  }
+}
+.container {
+  width: 366px;
+  height: 439px;
+  border-radius: 12px;
+  background: #fff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: auto;
+  margin-block-start: 50vh;
+  transform: translateY(-50%);
+}
+
+.styleClass {
+  margin-top: 42px;
+}
+
+.logo {
+  margin-top: 43px;
+}
+
+.entry_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 366px;
+  height: 439px;
+}
+
+.entry_input {
+  border: none;
+  border-bottom: 1px solid #d0cece;
+  padding-top: 38px;
+  width: 278px;
+}
+
+.entry_input::-moz-placeholder {
+  text-align: left;
+  padding-bottom: 8px;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 133.333% */
+  letter-spacing: -0.054px;
+  color: #e1e1e1;
+}
+
+.entry_input::placeholder {
+  text-align: left;
+  padding-bottom: 8px;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 133.333% */
+  letter-spacing: -0.054px;
+  color: #e1e1e1;
+}
+
+.entry_input:focus {
+  outline: none;
+}
+
+.entry_password_error {
+  animation-name: flash;
+  animation-duration: 20ms;
+  animation-iteration-count: 30;
+  position: absolute;
+  color: red;
+  margin-top: 120px;
+}
+
+.entry_button {
+  width: 278px;
+  height: 52px;
+  flex-shrink: 0;
+  background: #580ea2;
+  color: #fff;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 133.333% */
+  letter-spacing: -0.054px;
+  border-radius: 12px;
+  margin-top: 60px;
+  border: 1px solid #d0cece;
+}
+.entry_button-registry {
+  width: 278px;
+  height: 52px;
+  flex-shrink: 0;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 133.333% */
+  letter-spacing: -0.054px;
+  border-radius: 12px;
+  margin-top: 20px;
+  border: 1px solid #d0cece;
+  background: #fff;
+  color: #000;
+}
+.entry_button-registry:hover {
+  border: 1px solid #d0cece;
+  background: #f4f5f6;
+}
+.entry_button-registry:active {
+  border: 1px solid #d0cece;
+  background: #d9d9d9;
+}
+
+.entry_button:hover {
+  background: #3f007d;
+}
+
+.entry_button:active {
+  background: #271a58;
+}
+
+.not_found {
+  display: flex;
+  flex-direction: column;
+  margin: calc((100% - 617px) / 2) calc((100% - 356px) / 2);
+  width: 431px;
+  height: 366px;
+  align-items: center;
+  border-radius: 6px;
+}
+.not_found_404 {
+  font-size: 160px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 168px;
+}
+.not_found_header {
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 40px;
+}
+.not_found_text {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: -0.003em;
+  text-align: center;
+  margin-top: 8px;
+  color: #4e4e4e;
+}
+.not_found_button {
+  width: 278px;
+  height: 52px;
+  margin-top: 36px;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: -0.3%;
+  text-align: center;
+  background: #580ea2;
+  color: #fff;
+} /*# sourceMappingURL=entry.module.css.map */
