@@ -47,8 +47,29 @@ export const TrackTime = ({ time }: timeProps) => {
   return (
     <div className={styles.playerTime}>
       <div className={styles.time}>
-        {time.min.toFixed()} мин.{time.sec.toFixed()} сек. <br /> из <br />
-        {time.minDuration.toFixed()} мин.{time.secDuration.toFixed()} сек.
+        <span>
+          {Number(time.min.toFixed()) < 10
+            ? '0' + time.min.toFixed()
+            : time.min.toFixed()}
+          .
+        </span>
+        <span>
+          {Number(time.sec.toFixed()) < 10
+            ? '0' + time.sec.toFixed()
+            : time.sec.toFixed()}{' '}
+          :
+        </span>
+        <span>
+          {Number(time.minDuration.toFixed()) < 10
+            ? '0' + time.minDuration.toFixed()
+            : time.minDuration.toFixed()}
+          .
+        </span>
+        <span>
+          {Number(time.secDuration.toFixed()) < 10
+            ? '0' + time.secDuration.toFixed()
+            : time.secDuration.toFixed()}
+        </span>
       </div>
     </div>
   );

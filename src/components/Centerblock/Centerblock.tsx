@@ -1,41 +1,30 @@
 'use client';
 
-import styles from './Centerblock.module.css';
-import Content from '../Content/Content';
-import Filter from '../Filter/Filter';
-import Search from '../Search/Search';
-import { TrackType } from '@/types';
-import { getTracks } from '@/api/trackApi';
-import ErrorPage from '@/app/error';
+// import styles from './page.module.css';
+import { Nav } from '@/components/Nav/Nav';
+import Centerblock from '@/components/Centerblock/Centerblock';
+import Sidebar from '@/components/Sidebar/Sidebar';
+import PlayerBar from '@/components/PlayerBar/PlayerBar';
 import { useEffect, useState } from 'react';
-import { useAppDispatch } from '@/store/store';
-import { setTrackState } from '@/store/features/trackSlice';
+import { TrackType } from '@/types';
+import { useAppSelector } from '@/store/store';
 
-const Centerblock = () => {
-  const dispatch = useAppDispatch();
+export default function Home() {
+  const { thisTrack } = useAppSelector(state => state.tracksSlice);
 
-  useEffect(() => {
-    const getData = async () => {
-      // let tracks: TrackType[] = [];
-      try {
-        const data = await getTracks();
-        dispatch(setTrackState(data));
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          return <ErrorPage error={error.message} reset={(() => {})()} />;
-        }
-      }
-    };
-    getData();
-  }, []);
   return (
-    <div className={styles.mainCenterblock}>
-      <Search />
-      <h2 className={styles.centerblock__h2}>Треки</h2>
-      <Filter />
-      <Content />
-    </div>
+    // <div className={styles.wrapper}>
+    //   <div className={styles.container}>
+    //     <main className={styles.main}>
+    // <Nav />
+    <>
+      <Centerblock />
+      {/* // <Sidebar />
+        // </main> */}
+      {thisTrack && <PlayerBar thisTrack={thisTrack} />}
+    </>
+    // /     <footer className='footer'></footer>
+    //   </div>
+    // </div>
   );
-};
-
-export default Centerblock;
+}

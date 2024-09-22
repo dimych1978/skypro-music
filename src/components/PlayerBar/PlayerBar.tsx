@@ -53,7 +53,7 @@ const PlayerBar = ({ thisTrack }: props) => {
 
   useEffect(() => {
     isShuffle && dispatch(setShuffle());
-  }, [isShuffle]);
+  }, [isShuffle, dispatch]);
 
   const handlePlay = () => {
     dispatch(setIsPlaying(!isPlaying));
@@ -71,7 +71,7 @@ const PlayerBar = ({ thisTrack }: props) => {
   useEffect(() => {
     ref.current?.play();
     dispatch(setIsPlaying(true));
-  }, [thisTrack]);
+  }, [thisTrack, dispatch]);
 
   const handleEnd = () => {
     dispatch(setNextTrack());
@@ -101,11 +101,17 @@ const PlayerBar = ({ thisTrack }: props) => {
       setBackgroundBar('#B672FF');
       setTime({
         ...time,
-        min: Math.floor(ref.current.currentTime / 60),
-        sec: ref.current.currentTime % 60,
+        min:
+          // ref.current.currentTime % 60 > 0 && ref.current.currentTime % 60 < 1
+          //   ? Math.floor(ref.current.currentTime / 60) + 1
+          //   :
+          Math.floor(ref.current.currentTime / 60),
+        sec:
+          ref.current.currentTime % 60 > 0 && ref.current.currentTime % 60 < 1
+            ? 0
+            : ref.current.currentTime % 60,
       });
     };
-    console.log(ref.current.currentTime);
   }
 
   return (
@@ -119,13 +125,16 @@ const PlayerBar = ({ thisTrack }: props) => {
       />
       <div className={styles.barContent}>
         {thisTrack && (
-          <ProgressBar
-            widthBar={widthBar}
-            backgroundBar={backgroundBar}
-            setWidthBar={setWidthBar}
-            setBackgroundBar={setBackgroundBar}
-            track={ref.current}
-          />
+          <>
+            <TrackTime time={time} />
+            <ProgressBar
+              widthBar={widthBar}
+              backgroundBar={backgroundBar}
+              setWidthBar={setWidthBar}
+              setBackgroundBar={setBackgroundBar}
+              track={ref.current}
+            />
+          </>
         )}
         <div className={styles.barPlayerBlock}>
           <div className={styles.barPlayer}>
@@ -216,7 +225,6 @@ const PlayerBar = ({ thisTrack }: props) => {
               </div>
             </div>
           </div>
-          {thisTrack && <TrackTime time={time} />}
           <div className={styles.barVolumeBlock}>
             <div className={styles.volumeContent}>
               <div className={styles.volumeImage}>

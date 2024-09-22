@@ -1,12 +1,34 @@
+'use client';
+
 import Image from 'next/image';
 import styes from './Sidebar.module.css';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+import { errorNull, loginUser } from '@/store/features/authSlice';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const Sidebar = () => {
+  const { username } = useAppSelector(state => state.auth);
+  const [user, setUser] = useState('');
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (username) setUser(username);
+  }, []);
+
+  const logoutHandler = () => {
+    localStorage.clear();
+    dispatch(loginUser({ email: null, password: undefined }));
+    dispatch(errorNull());
+    router.push('/entryPages/login');
+  };
+
   return (
     <div className={styes.mainSidebar}>
       <div className={styes.sidebarPersonal}>
-        <p className={styes.sidebarPersonalName}>Sergey.Ivanov</p>
-        <div className={styes.sidebarIcon}>
+        <p className={styes.sidebarPersonalName}>{user}</p>
+        <div className={styes.sidebarIcon} onClick={logoutHandler}>
           <svg>
             <use xlinkHref='/img/icon/sprite.svg#logout'></use>
           </svg>
