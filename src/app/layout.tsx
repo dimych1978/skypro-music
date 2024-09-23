@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import ReduxProvider from '@/store/ReduxProvider';
+import styles from './page.module.css';
+import { Nav } from '@/components/Nav/Nav';
 
 const inter = Inter({ subsets: ['cyrillic'] });
 
@@ -18,7 +20,13 @@ export default function RootLayout({
   return (
     <html lang='ru'>
       <ReduxProvider>
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <div className={styles.wrapper}>
+            <div className={styles.container}>
+              <main className={styles.main}>{children}</main>
+            </div>
+          </div>
+        </body>
       </ReduxProvider>
     </html>
   );

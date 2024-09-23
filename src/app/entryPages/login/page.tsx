@@ -1,8 +1,11 @@
 'use client';
 import styles from '../..//page.module.css';
 import Entry from '../../../components/entry/entry';
+import { useAppSelector } from '@/store/store';
 
 const Login = () => {
+  const user = useAppSelector(state => state.auth);
+  console.log('🚀 ~ Login ~ user:', user);
   return (
     <div className={styles.wrapper}>
       <div className={styles.container} style={{ height: '100vh' }}>

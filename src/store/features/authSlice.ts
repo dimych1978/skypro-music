@@ -111,8 +111,10 @@ const authSlice = createSlice({
         state._id = action.payload._id;
         state.email = action.payload.email;
         state.username = action.payload.username;
-        // localStorage.setItem('email', action.payload.email);
-        // localStorage.setItem('username', action.payload.username);
+        if (action.payload.email)
+          localStorage.setItem('email', action.payload.email);
+        if (action.payload.username)
+          localStorage.setItem('username', action.payload.username);
       }
     );
 

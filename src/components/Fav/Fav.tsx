@@ -11,7 +11,10 @@ import { useRouter } from 'next/navigation';
 
 const Fav = () => {
   const dispatch = useAppDispatch();
-  const { token, favorite, authState } = useAppSelector(state => state.auth);
+  const { token, favorite, authState, email } = useAppSelector(
+    state => state.auth
+  );
+  console.log('🚀 ~ Fav ~ email:', email);
 
   const route = useRouter();
 
