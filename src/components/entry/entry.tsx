@@ -48,7 +48,8 @@ const Form = () => {
   }, []);
 
   useEffect(() => {
-    authState && navigate.push('/');
+    console.log('authState', authState);
+    authState && navigate.push('/trackPages/base');
   }, [authState]);
 
   return (
