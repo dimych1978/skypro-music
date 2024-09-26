@@ -6,12 +6,16 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { ProgressBar, TrackTime } from './ProgressBar';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import {
+  setDislikeTracks,
   setIsPlaying,
   setIsShuffle,
+  setLikeTracks,
   setNextTrack,
   setPreviousTrack,
   setShuffle,
 } from '@/store/features/trackSlice';
+import { useLikeTrack } from '@/hooks/useLikeTrack';
+import { onDislikeTracks, onLikeTracks } from '@/api/trackApi';
 
 type props = { thisTrack: TrackType };
 
@@ -25,6 +29,9 @@ export type TimeType = {
 const PlayerBar = ({ thisTrack }: props) => {
   const { name, author, track_file } = thisTrack;
   const { isShuffle, isPlaying } = useAppSelector(state => state.tracksSlice);
+  const { access, refresh } = useAppSelector(state => state.auth.token);
+  const { isLiked } = useLikeTrack(thisTrack._id);
+
   const dispatch = useAppDispatch();
   const ref = useRef<HTMLAudioElement>(null!);
 
@@ -75,6 +82,26 @@ const PlayerBar = ({ thisTrack }: props) => {
 
   const handleEnd = () => {
     dispatch(setNextTrack());
+  };
+
+  const handleLike = async () => {
+    if (thisTrack._id && access && refresh)
+      try {
+        await onLikeTracks(thisTrack._id, access, refresh);
+        dispatch(setLikeTracks(thisTrack._id));
+      } catch (error) {
+        console.log(error);
+      }
+  };
+
+  const handleDisLike = async () => {
+    if (thisTrack._id && access && refresh)
+      try {
+        await onDislikeTracks(thisTrack._id, access, refresh);
+        dispatch(setDislikeTracks(thisTrack._id));
+      } catch (error) {
+        console.log(error);
+      }
   };
 
   useEffect(() => {
@@ -212,12 +239,21 @@ const PlayerBar = ({ thisTrack }: props) => {
               </div>
 
               <div className={styles.trackPlayLikeDis}>
-                <div className={`${styles.trackPlayLike} btnIcon`}>
-                  <svg className={styles.trackPlayLikeSvg}>
+                <div
+                  className={`${styles.trackPlayLike} btnIcon`}
+                  onClick={handleLike}
+                >
+                  <svg
+                    className={styles.trackPlayLikeSvg}
+                    style={isLiked ? { fill: '#fff' } : { fill: '#696969' }}
+                  >
                     <use xlinkHref='/img/icon/sprite.svg#icon-like'></use>
                   </svg>
                 </div>
-                <div className={`${styles.trackPlayDislike}  btnIcon`}>
+                <div
+                  className={`${styles.trackPlayDislike}  btnIcon`}
+                  onClick={handleDisLike}
+                >
                   <svg className={styles.trackPlayDislikeSvg}>
                     <use xlinkHref='/img/icon/sprite.svg#icon-dislike'></use>
                   </svg>

@@ -1,11 +1,5 @@
 import styles from './Content.module.css';
 import Playlist from '../PlayList/Playlist';
-import { TrackType } from '@/types';
-
-// type ContentProps = {
-//   tracks: TrackType[];
-//   setThisTrack: (track: TrackType) => void;
-// };
 
 const Content = () => {
   return (

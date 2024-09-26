@@ -21,6 +21,7 @@ const Form = () => {
   const navigate = useRouter();
 
   const { error, authState, status } = useAppSelector(state => state.auth);
+  const user = useAppSelector(state => state.auth);
 
   const handleClick = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,13 +32,15 @@ const Form = () => {
     }
 
     try {
-      await dispatch(loginUser({ email: email, password: pass }));
+      await dispatch(loginUser({ email: email, password: pass })).unwrap();
       await dispatch(
         getTokenThunk({
           email: email,
           password: pass,
         })
-      );
+      ).unwrap();
+      console.log('user', user, authState, status);
+      navigate.push('/');
     } catch (error) {
       if (error instanceof Error) console.log(error);
     }
@@ -46,11 +49,6 @@ const Form = () => {
   useEffect(() => {
     dispatch(errorNull());
   }, []);
-
-  useEffect(() => {
-    console.log('authState', authState);
-    authState && navigate.push('/trackPages/base');
-  }, [authState]);
 
   return (
     <div className={styles.container}>

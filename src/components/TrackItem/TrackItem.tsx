@@ -11,11 +11,7 @@ const TrackItem = ({ track }: { track: TrackType }) => {
 
   const { isPlaying, thisTrack } = useAppSelector(state => state.tracksSlice);
 
-  const { token, favorite, email, authState } = useAppSelector(
-    state => state.auth
-  );
-  console.log('🚀 ~ TrackItem ~ authState:', authState);
-  // console.log('🚀 ~ TrackItem ~ favorite, email:', favorite, email);
+  const { token, favorite } = useAppSelector(state => state.auth);
 
   const { handleLike, isLiked } = useLikeTrack(track._id);
 
@@ -25,13 +21,17 @@ const TrackItem = ({ track }: { track: TrackType }) => {
 
   useEffect(() => {
     try {
-      if (token.access) {
-        dispatch(addFavoriteTracks(token.access));
+      console.log(token);
+      if (token.access && token.refresh) {
+        dispatch(
+          addFavoriteTracks({ access: token.access, refresh: token.refresh })
+        );
       }
+      console.log('object');
     } catch (error) {
       console.warn(error);
     }
-  }, [token.access, dispatch]);
+  }, [token.access, token.refresh, dispatch]);
 
   useEffect(() => {
     if (favorite) dispatch(setFavTracks(favorite));
