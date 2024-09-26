@@ -7,12 +7,7 @@ import {
 } from '@/api/authApi';
 import { getFavoriteTracks } from '@/api/trackApi';
 import { TrackType } from '@/types';
-import {
-  createAsyncThunk,
-  createSlice,
-  current,
-  PayloadAction,
-} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type InitialAuthType = {
   authState: boolean;
@@ -44,7 +39,8 @@ const initialState: InitialAuthType = {
   error: undefined,
   favorite: [],
   token: {
-    access: null,
+    access:
+      typeof window !== 'undefined' ? localStorage.getItem('access') : null,
     refresh:
       typeof window !== 'undefined' ? localStorage.getItem('refresh') : null,
   },
@@ -85,8 +81,8 @@ export const updateTokenThunk = createAsyncThunk(
 
 export const addFavoriteTracks = createAsyncThunk(
   'user/favorite',
-  async (access: string) => {
-    return await getFavoriteTracks(access);
+  async ({ access, refresh }: TokensType) => {
+    return await getFavoriteTracks({ access, refresh });
   }
 );
 
@@ -102,6 +98,7 @@ const authSlice = createSlice({
     builder.addCase(registryNewUser.pending, state => {
       state.status = 'loading';
     });
+
     builder.addCase(
       loginUser.fulfilled,
       (state, action: PayloadAction<InitialAuthType>) => {
@@ -111,10 +108,13 @@ const authSlice = createSlice({
         state._id = action.payload._id;
         state.email = action.payload.email;
         state.username = action.payload.username;
-        if (action.payload.email)
+        if (action.payload.email) {
           localStorage.setItem('email', action.payload.email);
-        if (action.payload.username)
-          localStorage.setItem('username', action.payload.username);
+          if (action.payload.email)
+            localStorage.setItem('username', action.payload.email);
+          if (action.payload._id)
+            localStorage.setItem('id', String(action.payload._id));
+        }
       }
     );
 
@@ -140,8 +140,7 @@ const authSlice = createSlice({
     builder.addCase(
       addFavoriteTracks.fulfilled,
       (state, action: PayloadAction<TrackType[]>) => {
-        const arr: number[] = [];
-        action.payload.forEach(el => arr.push(el._id));
+        console.log('payload fav', action.payload);
         state.favorite = action.payload;
       }
     );
