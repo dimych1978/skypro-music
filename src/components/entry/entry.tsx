@@ -18,10 +18,9 @@ const Form = () => {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [isEmptyField, setIsEmptyField] = useState(false);
-  const navigate = useRouter();
+  const router = useRouter();
 
   const { error, authState, status } = useAppSelector(state => state.auth);
-  const user = useAppSelector(state => state.auth);
 
   const handleClick = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,8 +38,8 @@ const Form = () => {
           password: pass,
         })
       ).unwrap();
-      console.log('user', user, authState, status);
-      navigate.push('/');
+      console.log(authState, status);
+      router.push('/');
     } catch (error) {
       if (error instanceof Error) console.log(error);
     }

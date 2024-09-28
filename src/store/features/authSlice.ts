@@ -140,7 +140,6 @@ const authSlice = createSlice({
     builder.addCase(
       addFavoriteTracks.fulfilled,
       (state, action: PayloadAction<TrackType[]>) => {
-        console.log('payload fav', action.payload);
         state.favorite = action.payload;
       }
     );

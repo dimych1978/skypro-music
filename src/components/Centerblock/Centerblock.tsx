@@ -18,19 +18,19 @@ export default function Centerblock() {
   const dispatch = useAppDispatch();
   const { thisTrack } = useAppSelector(state => state.tracksSlice);
 
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     try {
-  //       const data = await getTracks();
-  //       dispatch(setTrackState(data));
-  //     } catch (error: unknown) {
-  //       if (error instanceof Error) {
-  //         return <ErrorPage error={error.message} reset={(() => {})()} />;
-  //       }
-  //     }
-  //   };
-  //   getData();
-  // }, []);
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await getTracks();
+        dispatch(setTrackState(data));
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          return <ErrorPage error={error.message} reset={(() => {})()} />;
+        }
+      }
+    };
+    getData();
+  }, []);
 
   return (
     <>

@@ -1,4 +1,5 @@
 import { onDislikeTracks, onLikeTracks } from '@/api/trackApi';
+import { addFavoriteTracks } from '@/store/features/authSlice';
 import { setDislikeTracks, setLikeTracks } from '@/store/features/trackSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { TrackType } from '@/types';
@@ -25,6 +26,9 @@ export const useLikeTrack = (id: number) => {
     if (id)
       try {
         await action(id, access, refresh);
+        dispatch(
+          addFavoriteTracks({ access: access, refresh: refresh })
+        ).unwrap();
         if (isLiked) {
           dispatch(setDislikeTracks(id));
         } else dispatch(setLikeTracks(id));

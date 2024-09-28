@@ -5,6 +5,7 @@ import { useAppSelector } from '@/store/store';
 
 const Login = () => {
   const user = useAppSelector(state => state.auth);
+  console.log('🚀 ~ Login ~ user:', user);
 
   return (
     <div className={styles.wrapper}>

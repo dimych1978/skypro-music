@@ -16,14 +16,14 @@ export const getTracks = async (): Promise<TrackType[]> => {
 export const getFavoriteTracks = async ({
   access,
   refresh,
-}: TokensType): Promise<[]> => {
+}: TokensType): Promise<TrackType[]> => {
   const response = await fetch(URL + '/favorite/all/', {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${access}`,
     },
   });
-
+  console.log('status', response.status);
   if (response.status === 401) {
     const update = await updateToken(refresh);
     return await getFavoriteTracks({ access: update, refresh: refresh });
