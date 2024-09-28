@@ -38,7 +38,6 @@ const Form = () => {
           password: pass,
         })
       ).unwrap();
-      console.log(authState, status);
       router.push('/');
     } catch (error) {
       if (error instanceof Error) console.log(error);

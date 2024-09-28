@@ -23,17 +23,17 @@ export const getFavoriteTracks = async ({
       Authorization: `Bearer ${access}`,
     },
   });
+  if (!response.ok) {
+    throw new Error('Ошибка при получении данных');
+  }
   console.log('status', response.status);
   if (response.status === 401) {
     const update = await updateToken(refresh);
     return await getFavoriteTracks({ access: update, refresh: refresh });
+  } else {
+    const data = await response.json();
+    return data.data;
   }
-
-  if (!response.ok) {
-    throw new Error('Ошибка при получении данных');
-  }
-  const data = await response.json();
-  return data.data;
 };
 
 export const onDislikeTracks = async (
