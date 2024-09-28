@@ -36,7 +36,7 @@ export const Nav = () => {
       <div className={styles.navMenu} style={{ display: display }}>
         <ul className={styles.menuList}>
           <li className={styles.menuItem}>
-            <a href='/' className={styles.menuLink}>
+            <a href='/trackPages/base' className={styles.menuLink}>
               Главное
             </a>
           </li>

@@ -12,6 +12,7 @@ const TrackItem = ({ track }: { track: TrackType }) => {
   const { isPlaying, thisTrack } = useAppSelector(state => state.tracksSlice);
 
   const { token, favorite } = useAppSelector(state => state.auth);
+  // console.log('🚀 ~ TrackItem ~ token:', token);
 
   const { handleLike, isLiked } = useLikeTrack(track._id);
 
@@ -19,23 +20,30 @@ const TrackItem = ({ track }: { track: TrackType }) => {
     dispatch(setThisTrack(track));
   };
 
-  useEffect(() => {
-    try {
-      console.log(token);
-      if (token.access && token.refresh) {
-        dispatch(
-          addFavoriteTracks({ access: token.access, refresh: token.refresh })
-        );
-      }
-      console.log('object');
-    } catch (error) {
-      console.warn(error);
-    }
-  }, [token.access, token.refresh, dispatch]);
+  // useEffect(() => {
+  //   try {
+  //     if (token.access && token.refresh) {
+  //       dispatch(
+  //         addFavoriteTracks({ access: token.access, refresh: token.refresh })
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.warn(error);
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    if (favorite) dispatch(setFavTracks(favorite));
-  }, [favorite, dispatch]);
+  // useEffect(() => {
+  //   // console.log('token', token);
+  //   try {
+  //     // console.log('favorite TrackItem', favorite);
+  //     if (token.access && token.refresh)
+  //       dispatch(
+  //         addFavoriteTracks({ access: token.access, refresh: token.refresh })
+  //       );
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }, []);
 
   return (
     <div className={styles.playlistItem}>
