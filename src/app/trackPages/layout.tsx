@@ -18,19 +18,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ReduxProvider>
-      <div className={styles.wrapper}>
-        <div className={styles.container}>
-          <main className={styles.main}>
-            <Nav />
-            <div className={styles.mainCenterblock}>
-              <Search />
-              {children}
-            </div>
-            <Sidebar />
-          </main>
-        </div>
+    <div className={styles.wrapper}>
+      <div className={styles.container}>
+        <main className={styles.main}>
+          <Nav />
+          <div className={styles.mainCenterblock}>
+            <Search />
+            {children}
+          </div>
+          <Sidebar />
+        </main>
       </div>
-    </ReduxProvider>
+    </div>
   );
 }

@@ -20,17 +20,17 @@ const TrackItem = ({ track }: { track: TrackType }) => {
     dispatch(setThisTrack(track));
   };
 
-  // useEffect(() => {
-  //   try {
-  //     if (token.access && token.refresh) {
-  //       dispatch(
-  //         addFavoriteTracks({ access: token.access, refresh: token.refresh })
-  //       );
-  //     }
-  //   } catch (error) {
-  //     console.warn(error);
-  //   }
-  // }, []);
+  useEffect(() => {
+    try {
+      if (token.access && token.refresh) {
+        dispatch(
+          addFavoriteTracks({ access: token.access, refresh: token.refresh })
+        );
+      }
+    } catch (error) {
+      console.warn(error);
+    }
+  }, []);
 
   // useEffect(() => {
   //   // console.log('token', token);
