@@ -1,49 +1,20 @@
 import styles from '@/components/PlayList/Playlist.module.css';
 import { useLikeTrack } from '@/hooks/useLikeTrack';
-import { addFavoriteTracks } from '@/store/features/authSlice';
-import { setFavTracks, setThisTrack } from '@/store/features/trackSlice';
+import { setThisTrack } from '@/store/features/trackSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { TrackType } from '@/types';
-import { useEffect } from 'react';
 
 const TrackItem = ({ track }: { track: TrackType }) => {
   const dispatch = useAppDispatch();
 
   const { isPlaying, thisTrack } = useAppSelector(state => state.tracksSlice);
 
-  const { token, favorite } = useAppSelector(state => state.auth);
-  // console.log('🚀 ~ TrackItem ~ token:', token);
 
   const { handleLike, isLiked } = useLikeTrack(track._id);
 
   const handleTrack = (track: TrackType) => {
     dispatch(setThisTrack(track));
   };
-
-  useEffect(() => {
-    try {
-      if (token.access && token.refresh) {
-        dispatch(
-          addFavoriteTracks({ access: token.access, refresh: token.refresh })
-        );
-      }
-    } catch (error) {
-      console.warn(error);
-    }
-  }, []);
-
-  // useEffect(() => {
-  //   // console.log('token', token);
-  //   try {
-  //     // console.log('favorite TrackItem', favorite);
-  //     if (token.access && token.refresh)
-  //       dispatch(
-  //         addFavoriteTracks({ access: token.access, refresh: token.refresh })
-  //       );
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }, []);
 
   return (
     <div className={styles.playlistItem}>

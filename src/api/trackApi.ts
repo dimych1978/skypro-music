@@ -23,14 +23,13 @@ export const getFavoriteTracks = async ({
       Authorization: `Bearer ${access}`,
     },
   });
-  if (!response.ok) {
-    throw new Error('Ошибка при получении данных');
-  }
-  console.log('status', response.status);
   if (response.status === 401) {
     const update = await updateToken(refresh);
     return await getFavoriteTracks({ access: update, refresh: refresh });
   } else {
+    if (!response.ok) {
+      throw new Error('Ошибка при получении данных');
+    }
     const data = await response.json();
     return data.data;
   }
@@ -51,14 +50,14 @@ export const onDislikeTracks = async (
   if (response.status === 401) {
     const update = await updateToken(refresh);
     return await getFavoriteTracks({ access: update, refresh: refresh });
-  }
+  } else {
+    if (!response.ok) {
+      throw new Error('Ошибка при получении данных');
+    }
+    const data = await response.json();
 
-  if (!response.ok) {
-    throw new Error('Ошибка при получении данных');
+    return data.data;
   }
-  const data = await response.json();
-
-  return data.data;
 };
 
 export const onLikeTracks = async (
@@ -76,11 +75,12 @@ export const onLikeTracks = async (
   if (response.status === 401) {
     const update = await updateToken(refresh);
     return await getFavoriteTracks({ access: update, refresh: refresh });
-  }
-  if (!response.ok) {
-    throw new Error('Ошибка при получении данных');
-  }
+  } else {
+    if (!response.ok) {
+      throw new Error('Ошибка при получении данных');
+    }
 
-  const data = await response.json();
-  return data.data;
+    const data = await response.json();
+    return data.data;
+  }
 };

@@ -10,7 +10,9 @@ export const useLikeTrack = (id: number) => {
   const { access, refresh } = useAppSelector(state => state.auth.token);
   const user = useAppSelector(state => state.auth.email);
   const favoriteTracks = useAppSelector(state => state.tracksSlice.isFav);
+  // console.log('🚀 ~ useLikeTrack ~ favoriteTracks:', favoriteTracks);
   const isLiked: boolean = favoriteTracks.some(el => el === id);
+  // console.log('🚀 ~ useLikeTrack ~ isLiked:', isLiked);
 
   const handleLike = async (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>

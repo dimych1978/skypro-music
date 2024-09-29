@@ -128,11 +128,7 @@ const PlayerBar = ({ thisTrack }: props) => {
       setBackgroundBar('#B672FF');
       setTime({
         ...time,
-        min:
-          // ref.current.currentTime % 60 > 0 && ref.current.currentTime % 60 < 1
-          //   ? Math.floor(ref.current.currentTime / 60) + 1
-          //   :
-          Math.floor(ref.current.currentTime / 60),
+        min: Math.floor(ref.current.currentTime / 60),
         sec:
           ref.current.currentTime % 60 > 0 && ref.current.currentTime % 60 < 1
             ? 0
