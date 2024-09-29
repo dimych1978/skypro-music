@@ -19,7 +19,6 @@ const Sidebar = () => {
 
   const logoutHandler = () => {
     localStorage.clear();
-    dispatch(loginUser({ email: null, password: undefined }));
     dispatch(errorNull());
     router.push('/entryPages/login');
   };

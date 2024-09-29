@@ -1,12 +1,7 @@
 'use client';
 
-// import styles from './page.module.css';
-import { Nav } from '@/components/Nav/Nav';
-// import Centerblock from '@/components/Centerblock/Centerblock';
-import Sidebar from '@/components/Sidebar/Sidebar';
 import PlayerBar from '@/components/PlayerBar/PlayerBar';
-import { useEffect, useState } from 'react';
-import { TrackType } from '@/types';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { getTracks } from '@/api/trackApi';
 import ErrorPage from '@/app/error';

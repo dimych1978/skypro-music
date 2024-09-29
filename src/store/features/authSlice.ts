@@ -156,6 +156,13 @@ const authSlice = createSlice({
       console.log('🚀 ~ builder.addCase ~ state.error:', state.error);
       console.log(action.error);
     });
+
+    builder.addCase(addFavoriteTracks.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.error.message || '';
+      console.log('🚀 ~ builder.addCase ~ state.error:', state.error);
+      console.log(action.error);
+    });
   },
 });
 

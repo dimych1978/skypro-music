@@ -24,11 +24,19 @@ function Favorite() {
         </>
       ) : (
         <>
-          <span onClick={() => router.push('/entryPages/registry')}>
+          <span
+            className={styles.span}
+            onClick={() => router.push('/entryPages/registry')}
+          >
             Зарегистрируйтесь&ensp;
           </span>
           или&ensp;
-          <span onClick={() => router.push('/entryPages/login')}>войдите</span>
+          <span
+            className={styles.span}
+            onClick={() => router.push('/entryPages/login')}
+          >
+            войдите
+          </span>
         </>
       )}
     </>

@@ -1,5 +1,5 @@
 import { TrackType } from '@/types';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
 
 type initialStateType = {
   tracks: TrackType[];
@@ -50,14 +50,18 @@ const trackSlice = createSlice({
       const index = playlist.findIndex(
         item => item._id === state.thisTrack!._id
       );
-
-      index < playlist.length
+      index + 1 <= playlist.length - 1
         ? (state.thisTrack = playlist[index + 1])
-        : (state.thisTrack = playlist[playlist.length]);
+        : (state.thisTrack = playlist[playlist.length - 1]);
     },
 
     setPreviousTrack: state => {
       const playlist = !state.isShuffle ? state.tracks : state.defaultTracks;
+      console.log(
+        'playlist',
+        current(state.defaultTracks),
+        current(state.tracks)
+      );
 
       const index = playlist.findIndex(
         item => item._id === state.thisTrack!._id
