@@ -49,7 +49,7 @@ export const onDislikeTracks = async (
 
   if (response.status === 401) {
     const update = await updateToken(refresh);
-    return await getFavoriteTracks({ access: update, refresh: refresh });
+    return await onDislikeTracks(id, update, refresh);
   } else {
     if (!response.ok) {
       throw new Error('Ошибка при получении данных');
@@ -74,7 +74,7 @@ export const onLikeTracks = async (
 
   if (response.status === 401) {
     const update = await updateToken(refresh);
-    return await getFavoriteTracks({ access: update, refresh: refresh });
+    return await onLikeTracks(id, update, refresh);
   } else {
     if (!response.ok) {
       throw new Error('Ошибка при получении данных');

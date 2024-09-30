@@ -8,26 +8,23 @@ import { setTrackState } from '@/store/features/trackSlice';
 
 const Fav = () => {
   const dispatch = useAppDispatch();
-  const { token, favorite, authState } = useAppSelector(state => state.auth);
-  console.log(
-    '🚀 ~ Fav ~ useAppSelector(state => state.auth):',
-    useAppSelector(state => state.auth)
-  );
+  const { token, favorite } = useAppSelector(state => state.auth);
 
   useEffect(() => {
-    console.log(favorite);
-    try {
-      // if (token.access && token.refresh) {
-      //   dispatch(
-      //     addFavoriteTracks({ access: token.access, refresh: token.refresh })
-      //   ).then(data => dispatch(setTrackState(data.payload)));
-      // }
-      dispatch(setTrackState(favorite));
-    } catch (error) {
-      console.warn(error);
-    }
-  }, [favorite]);
-  console.log(favorite);
+    const getData = async () => {
+      try {
+        if (token.access && token.refresh) {
+          await dispatch(
+            addFavoriteTracks({ access: token.access, refresh: token.refresh })
+          );
+          dispatch(setTrackState(favorite));
+        }
+      } catch (error) {
+        console.warn(error);
+      }
+    };
+    getData();
+  }, []);
   return (
     <>
       {favorite.map(track => (

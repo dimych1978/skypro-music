@@ -30,7 +30,7 @@ const trackSlice = createSlice({
       state.defaultTracks = action.payload;
     },
 
-    setThisTrack: (state, action: PayloadAction<TrackType>) => {
+    setThisTrack: (state, action: PayloadAction<TrackType | null>) => {
       state.thisTrack = action.payload;
     },
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import styles from '../../page.module.css';
+import styles from '../page.module.css';
 import Centerblock from '@/components/Centerblock/Centerblock';
 import { useEffect } from 'react';
 import { addFavoriteTracks } from '@/store/features/authSlice';
