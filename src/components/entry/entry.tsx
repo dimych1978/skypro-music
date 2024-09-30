@@ -72,6 +72,7 @@ const Form = () => {
         />
         <input
           className={styles.entry_input}
+          type='password'
           value={pass}
           onChange={e => {
             setPass(e.target.value);

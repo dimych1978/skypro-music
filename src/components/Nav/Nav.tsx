@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import styles from './Nav.module.css';
 import React from 'react';
+import Link from 'next/link';
 
 export const Logo = () => {
   return (
@@ -36,19 +37,19 @@ export const Nav = () => {
       <div className={styles.navMenu} style={{ display: display }}>
         <ul className={styles.menuList}>
           <li className={styles.menuItem}>
-            <a href='/trackPages/base' className={styles.menuLink}>
+            <Link href='/trackPages' className={styles.menuLink}>
               Главное
-            </a>
+            </Link>
           </li>
           <li className={styles.menuItem}>
-            <a href='/trackPages/favorite' className={styles.menuLink}>
+            <Link href='/trackPages/favorite' className={styles.menuLink}>
               Мой плейлист
-            </a>
+            </Link>
           </li>
           <li className={styles.menuItem}>
-            <a href='/entryPages/login' className='menu__link'>
+            <Link href='/entryPages/login' className='menu__link'>
               Войти
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

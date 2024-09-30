@@ -92,12 +92,14 @@ const Form = () => {
         />
         <input
           className={styles.entry_input}
+          type='password'
           name='pass'
           onChange={inputChange}
           placeholder='Пароль'
         />
         <input
           className={styles.entry_input}
+          type='password'
           name='rePass'
           onChange={inputChange}
           placeholder='Повторить пароль'

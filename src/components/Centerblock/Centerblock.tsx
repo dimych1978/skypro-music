@@ -7,13 +7,14 @@ import { getTracks } from '@/api/trackApi';
 import ErrorPage from '@/app/error';
 import Content from '../Content/Content';
 import Filter from '../Filter/Filter';
-import { setTrackState } from '@/store/features/trackSlice';
+import { setThisTrack, setTrackState } from '@/store/features/trackSlice';
 
 export default function Centerblock() {
   const dispatch = useAppDispatch();
   const { thisTrack } = useAppSelector(state => state.tracksSlice);
 
   useEffect(() => {
+    dispatch(setThisTrack(null));
     const getData = async () => {
       try {
         const data = await getTracks();

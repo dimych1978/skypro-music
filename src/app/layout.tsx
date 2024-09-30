@@ -22,9 +22,7 @@ export default function RootLayout({
       <ReduxProvider>
         <body className={inter.className}>
           <div className={styles.wrapper}>
-            <div className={styles.container}>
-              <main className={styles.main}>{children}</main>
-            </div>
+            <div className={styles.container}>{children}</div>
           </div>
         </body>
       </ReduxProvider>

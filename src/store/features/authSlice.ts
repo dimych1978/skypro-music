@@ -121,19 +121,21 @@ const authSlice = createSlice({
     builder.addCase(
       getTokenThunk.fulfilled,
       (state, action: PayloadAction<TokensType>) => {
+        console.log('getTokenThunk');
         state.token.access = action.payload.access;
         state.token.refresh = action.payload.refresh;
-        localStorage.setItem('access', action.payload.access);
-        localStorage.setItem('refresh', action.payload.refresh);
+        // localStorage.setItem('access', action.payload.access);
+        // localStorage.setItem('refresh', action.payload.refresh);
       }
     );
 
     builder.addCase(
       updateTokenThunk.fulfilled,
       (state, action: PayloadAction<string>) => {
-        console.log('action.payload', action.payload);
+        console.log('updateTokenThunk', action.payload);
         state.authState = true;
         state.token.access = action.payload;
+        localStorage.setItem('access', action.payload);
       }
     );
 

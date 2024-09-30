@@ -17,9 +17,6 @@ const DropMenu: React.FC<DropMenuProps> = ({ list }) => {
           </div>
         ))}
       </div>
-      {/* </> */}
-      {/* ) */}
-      {/* } */}
     </div>
   );
 };

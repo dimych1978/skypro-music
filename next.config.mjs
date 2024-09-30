@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/trackPages/base',
+        destination: '/trackPages',
         permanent: true,
       },
     ];
