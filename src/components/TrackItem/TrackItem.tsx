@@ -61,14 +61,20 @@ const TrackItem = ({ track }: { track: TrackType }) => {
           </div>
         </div>
         <div className={styles.trackAuthor}>
-          <Link className={styles.trackAuthorLink} href='http://'>
+          <span
+            className={styles.trackAuthorLink}
+            // href='http://'
+          >
             {track.album}
-          </Link>
+          </span>
         </div>
         <div className={styles.trackAlbum}>
-          <Link className={styles.trackAlbumLink} href='http://'>
+          <span
+            className={styles.trackAlbumLink}
+            // href='http://'
+          >
             {track.name}
-          </Link>
+          </span>
         </div>
         <div
           onClick={e => {

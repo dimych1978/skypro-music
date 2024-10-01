@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Montserrat } from 'next/font/google';
 import './globals.css';
 import ReduxProvider from '@/store/ReduxProvider';
 import styles from './page.module.css';
 import { Nav } from '@/components/Nav/Nav';
 
-const inter = Inter({ subsets: ['cyrillic'] });
+const inter = Montserrat({ subsets: ['cyrillic'] });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
