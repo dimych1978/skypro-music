@@ -7,7 +7,7 @@ import { setFavTracks } from '@/store/features/trackSlice';
 
 const Playlist = () => {
   const { tracks } = useAppSelector(state => state.tracksSlice);
-  const { favorite, token } = useAppSelector(state => state.auth);
+  const { favorite } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

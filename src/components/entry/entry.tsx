@@ -38,7 +38,7 @@ const Form = () => {
           password: pass,
         })
       ).unwrap();
-      router.push('/');
+      router.push('/trackPages');
     } catch (error) {
       if (error instanceof Error) console.log(error);
     }

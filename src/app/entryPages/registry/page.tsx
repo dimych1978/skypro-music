@@ -57,6 +57,7 @@ const Form = () => {
             password: pass,
           })
         );
+        navigate.push('/entryPages/login');
       } else {
         setEntry({ ...entry, matchPasswords: false });
         throw new Error('Пароли не совпадают');
@@ -69,10 +70,6 @@ const Form = () => {
   useEffect(() => {
     dispatch(errorNull());
   }, []);
-
-  useEffect(() => {
-    status === 'fulfilled' && email && navigate.push('/entryPages/login');
-  }, [status]);
 
   return (
     <div className={styles.container}>

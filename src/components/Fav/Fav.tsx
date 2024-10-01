@@ -27,9 +27,11 @@ const Fav = () => {
   }, []);
   return (
     <>
-      {favorite.map(track => (
-        <TrackItem key={track._id} track={track} />
-      ))}
+      {favorite.length > 0 ? (
+        favorite.map(track => <TrackItem key={track._id} track={track} />)
+      ) : (
+        <h2>Любимых треков пока нет. Добавьте же их скорее!</h2>
+      )}
     </>
   );
 };
