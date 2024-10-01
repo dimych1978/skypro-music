@@ -33,7 +33,6 @@ const Form = () => {
   const dispatch = useAppDispatch();
 
   const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(errorNull());
     setEntry({
       ...entry,
       [e.target.name]: e.target.value,
@@ -85,6 +84,10 @@ const Form = () => {
           className={styles.entry_input}
           name='email'
           onChange={inputChange}
+          onFocus={() => {
+            setEntry({ ...entry, isEmptyField: false });
+            dispatch(errorNull());
+          }}
           placeholder='Логин'
         />
         <input
@@ -92,6 +95,10 @@ const Form = () => {
           type='password'
           name='pass'
           onChange={inputChange}
+          onFocus={() => {
+            setEntry({ ...entry, isEmptyField: false });
+            dispatch(errorNull());
+          }}
           placeholder='Пароль'
         />
         <input
@@ -99,6 +106,10 @@ const Form = () => {
           type='password'
           name='rePass'
           onChange={inputChange}
+          onFocus={() => {
+            setEntry({ ...entry, isEmptyField: false });
+            dispatch(errorNull());
+          }}
           placeholder='Повторить пароль'
         />
         <button
