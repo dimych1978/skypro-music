@@ -1,22 +1,17 @@
 'use client';
 
-import { useAppDispatch, useAppSelector } from '@/store/store';
+import { useAppSelector } from '@/store/store';
 import styles from '../../page.module.css';
 import Fav from '@/components/Fav/Fav';
-import PlayerBar from '@/components/PlayerBar/PlayerBar';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { setThisTrack } from '@/store/features/trackSlice';
 
 function Favorite() {
   const router = useRouter();
-  const dispatch = useAppDispatch();
   const [user, setUser] = useState(false);
-  const { thisTrack } = useAppSelector(state => state.tracksSlice);
 
   const { token } = useAppSelector(state => state.auth);
   useEffect(() => {
-    dispatch(setThisTrack(null));
     setUser(true);
   }, []);
   return (
@@ -25,7 +20,6 @@ function Favorite() {
       {user && token.access ? (
         <>
           <Fav />
-          {thisTrack && <PlayerBar thisTrack={thisTrack} />}
         </>
       ) : (
         <>

@@ -8,7 +8,6 @@ import { useState } from 'react';
 
 const TrackItem = ({ track }: { track: TrackType }) => {
   const dispatch = useAppDispatch();
-
   const { isPlaying, thisTrack } = useAppSelector(state => state.tracksSlice);
 
   const [clicked, setClicked] = useState(false);
@@ -36,7 +35,7 @@ const TrackItem = ({ track }: { track: TrackType }) => {
       <div className={styles.playlistTrack}>
         <div className={styles.trackTitle} onClick={() => handleTrack(track)}>
           <div className={styles.trackTitleImage}>
-            {thisTrack === track ? (
+            {thisTrack?._id === track._id ? (
               <span
                 className={
                   isPlaying
