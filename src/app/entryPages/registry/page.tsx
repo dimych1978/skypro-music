@@ -82,6 +82,7 @@ const Form = () => {
       <form onSubmit={regUser} className={styles.entry_form}>
         <input
           className={styles.entry_input}
+          type='text'
           name='email'
           onChange={inputChange}
           onFocus={() => {
@@ -112,21 +113,17 @@ const Form = () => {
           }}
           placeholder='Повторить пароль'
         />
-        <button
-          name='reg'
-          className={styles.entry_button}
-          style={{ marginTop: '60px' }}
-          type='submit'
-        >
+        <div className={styles.entry_password_error_container}>
+          {isEmptyField && (
+            <h3 className={styles.entry_password_error}>Заполните все поля!</h3>
+          )}
+          {!matchPasswords && (
+            <h3 className={styles.entry_password_error}>Пароли не совпадают</h3>
+          )}
+        </div>
+        <button name='reg' className={styles.entry_button} type='submit'>
           Зарегистрироваться
         </button>
-        {isEmptyField && (
-          <h3 className={styles.entry_password_error}>Заполните все поля!</h3>
-        )}
-        {!matchPasswords && (
-          <h3 className={styles.entry_password_error}>Пароли не совпадают</h3>
-        )}
-        {}
         {status === 'rejected' && (
           <h3 className={styles.entry_password_error}>{error}</h3>
         )}

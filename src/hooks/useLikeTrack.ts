@@ -17,7 +17,7 @@ export const useLikeTrack = (id: number) => {
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     e.stopPropagation();
-    console.log(access);
+
     if (!access || !refresh || !user) {
       return alert('Зарегистрируйтесь или войдите');
     }

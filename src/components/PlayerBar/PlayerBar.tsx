@@ -1,6 +1,6 @@
 'use client';
 
-import { TrackType } from '@/types';
+// import { TrackType } from '@/types';
 import styles from './PlayerBar.module.css';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { ProgressBar, TrackTime } from './ProgressBar';
@@ -14,7 +14,7 @@ import {
 } from '@/store/features/trackSlice';
 import { useLikeTrack } from '@/hooks/useLikeTrack';
 
-type props = { thisTrack: TrackType };
+// type props = { thisTrack: TrackType };
 
 export type TimeType = {
   min: number;
@@ -23,10 +23,11 @@ export type TimeType = {
   secDuration: number;
 };
 
-const PlayerBar = ({ thisTrack }: props) => {
-  const { name, author, track_file } = thisTrack;
+const PlayerBar = () => {
+  const { thisTrack } = useAppSelector(state => state.tracksSlice);
+  // const { name, author, track_file } = thisTrack;
   const { isShuffle, isPlaying } = useAppSelector(state => state.tracksSlice);
-  const { isLiked, handleLike } = useLikeTrack(thisTrack._id);
+  const { isLiked, handleLike } = useLikeTrack(thisTrack ? thisTrack._id : 1);
 
   const dispatch = useAppDispatch();
   const ref = useRef<HTMLAudioElement>(null!);
@@ -81,9 +82,8 @@ const PlayerBar = ({ thisTrack }: props) => {
   };
 
   useEffect(() => {
-    ref.current && repeat
-      ? (ref.current!.loop = true)
-      : (ref.current!.loop = false);
+    if (ref.current)
+      repeat ? (ref.current!.loop = true) : (ref.current!.loop = false);
   }, [repeat]);
 
   if (ref.current) {
@@ -114,14 +114,19 @@ const PlayerBar = ({ thisTrack }: props) => {
   }
 
   return (
-    <div className={styles.bar}>
-      <audio
-        ref={ref}
-        src={track_file}
-        controls
-        style={{ display: 'none' }}
-        onEnded={handleEnd}
-      />
+    <div
+      className={styles.bar}
+      style={thisTrack ? { display: 'block' } : { display: 'none' }}
+    >
+      {thisTrack && (
+        <audio
+          ref={ref}
+          src={thisTrack.track_file}
+          controls
+          style={{ display: 'none' }}
+          onEnded={handleEnd}
+        />
+      )}
       <div className={styles.barContent}>
         {thisTrack && (
           <>
@@ -192,23 +197,25 @@ const PlayerBar = ({ thisTrack }: props) => {
               </div>
             </div>
             <div className={styles.playerTrackPlay}>
-              <div className={styles.trackPlayContain}>
-                <div className={styles.trackPlayImage}>
-                  <svg className={styles.trackPlaySvg}>
-                    <use xlinkHref='/img/icon/sprite.svg#icon-note'></use>
-                  </svg>
+              {thisTrack && (
+                <div className={styles.trackPlayContain}>
+                  <div className={styles.trackPlayImage}>
+                    <svg className={styles.trackPlaySvg}>
+                      <use xlinkHref='/img/icon/sprite.svg#icon-note'></use>
+                    </svg>
+                  </div>
+                  <div className={styles.trackPlayAuthor}>
+                    <a className={styles.trackPlayAuthorLink} href='http://'>
+                      {thisTrack.name}
+                    </a>
+                  </div>
+                  <div className={styles.trackPlayAlbum}>
+                    <a className={styles.trackPlayAlbumLink} href='http://'>
+                      {thisTrack.author}
+                    </a>
+                  </div>
                 </div>
-                <div className={styles.trackPlayAuthor}>
-                  <a className={styles.trackPlayAuthorLink} href='http://'>
-                    {name}
-                  </a>
-                </div>
-                <div className={styles.trackPlayAlbum}>
-                  <a className={styles.trackPlayAlbumLink} href='http://'>
-                    {author}
-                  </a>
-                </div>
-              </div>
+              )}
 
               <div className={styles.trackPlayLikeDis}>
                 <div

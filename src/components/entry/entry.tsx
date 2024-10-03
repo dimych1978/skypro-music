@@ -83,21 +83,21 @@ const Form = () => {
           }}
           placeholder='Пароль'
         />
+        <div className={styles.entry_password_error_container}>
+          {isEmptyField && (
+            <h3 className={styles.entry_password_error}>Заполните все поля!</h3>
+          )}
+        </div>
         <button name='login' type='submit' className={styles.entry_button}>
           Войти
         </button>
-        <Link href={'/entryPages/registry'}>
-          <button
-            name='reg'
-            className={styles['entry_button-registry']}
-            style={{ marginTop: '20px' }}
-          >
-            Зарегистрироваться
-          </button>
-        </Link>
-        {isEmptyField && (
-          <h3 className={styles.entry_password_error}>Заполните все поля!</h3>
-        )}
+        <button
+          name='reg'
+          className={styles['entry_button-registry']}
+          onClick={() => router.push('/entryPages/registry')}
+        >
+          Зарегистрироваться
+        </button>
         {status === 'rejected' && (
           <h3 className={styles.entry_password_error}>{error}</h3>
         )}

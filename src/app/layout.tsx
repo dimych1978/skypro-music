@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
-import { Inter, Montserrat } from 'next/font/google';
+import { Montserrat } from 'next/font/google';
 import './globals.css';
 import ReduxProvider from '@/store/ReduxProvider';
 import styles from './page.module.css';
-import { Nav } from '@/components/Nav/Nav';
 
 const inter = Montserrat({ subsets: ['cyrillic'] });
 

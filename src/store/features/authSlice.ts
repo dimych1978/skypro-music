@@ -102,7 +102,6 @@ const authSlice = createSlice({
     builder.addCase(
       loginUser.fulfilled,
       (state, action: PayloadAction<InitialAuthType>) => {
-        console.log('action.payload', action.payload);
         state.status = 'fulfilled';
         state.authState = true;
         state._id = action.payload._id;
@@ -121,7 +120,6 @@ const authSlice = createSlice({
     builder.addCase(
       getTokenThunk.fulfilled,
       (state, action: PayloadAction<TokensType>) => {
-        console.log('getTokenThunk');
         state.token.access = action.payload.access;
         state.token.refresh = action.payload.refresh;
         // localStorage.setItem('access', action.payload.access);

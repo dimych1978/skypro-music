@@ -74,12 +74,17 @@
 }
 
 .entry_password_error {
+  width: 278px;
   animation-name: flash;
   animation-duration: 20ms;
   animation-iteration-count: 30;
   position: absolute;
   color: red;
-  margin-top: 120px;
+  text-align: center;
+}
+
+.entry_password_error_container {
+  width: 278px;
 }
 
 .entry_button {
@@ -97,6 +102,7 @@
   margin-top: 60px;
   border: 1px solid #d0cece;
 }
+
 .entry_button-registry {
   width: 278px;
   height: 52px;

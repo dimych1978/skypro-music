@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import '../globals.css';
-import ReduxProvider from '@/store/ReduxProvider';
+// import '../globals.css';
 import { Nav } from '@/components/Nav/Nav';
 import styles from '../page.module.css';
 import Search from '@/components/Search/Search';
 import Sidebar from '@/components/Sidebar/Sidebar';
+import PlayerBar from '@/components/PlayerBar/PlayerBar';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -27,6 +26,7 @@ export default function RootLayout({
             {children}
           </div>
           <Sidebar />
+          <PlayerBar />
         </main>
       </div>
     </div>
