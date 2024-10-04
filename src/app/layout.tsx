@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
+import ReduxProvider from '@/store/ReduxProvider';
+import styles from './page.module.css';
 
-const montserrat = Montserrat({ subsets: ['cyrillic'] });
+const inter = Montserrat({ subsets: ['cyrillic'] });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +18,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ru'>
-      <body className={montserrat.className}>{children}</body>
+      <ReduxProvider>
+        <body className={inter.className}>
+          <div className={styles.wrapper}>
+            <div className={styles.container}>{children}</div>
+          </div>
+        </body>
+      </ReduxProvider>
     </html>
   );
 }
