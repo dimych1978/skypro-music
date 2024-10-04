@@ -1,84 +1,76 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import styles from './ProgressBar.module.css';
+import { TimeType } from './PlayerBar';
 
-type props = { track: React.RefObject<HTMLAudioElement> };
+type props = {
+  widthBar?: number;
+  backgroundBar?: string;
+  setWidthBar: React.Dispatch<React.SetStateAction<number>>;
+  setBackgroundBar: React.Dispatch<React.SetStateAction<string>>;
+  track?: HTMLAudioElement;
+};
 
-const ProgressBar = ({ track }: props) => {
-  const [backgroundBar, setBackgroundBar] = useState<string>('2e2e2e');
-  const [widthBar, setWidthBar] = useState<number>(0);
+type timeProps = { time: TimeType };
 
-  type Time = {
-    min: number;
-    sec: number;
-    minDuration: number;
-    secDuration: number;
-  };
-
-  const [time, setTime] = useState<Time>({
-    min: 0,
-    sec: 0,
-    minDuration: 0,
-    secDuration: 0,
-  });
-
+export const ProgressBar = ({
+  widthBar,
+  backgroundBar,
+  setWidthBar,
+  setBackgroundBar,
+  track,
+}: props) => {
   const ref = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    setWidthBar(0);
-  }, [track]);
-
-  if (track.current) {
-    track.current.ontimeupdate = () => {
-      setWidthBar(
-        track.current!.duration
-          ? (track.current!.currentTime / track.current!.duration) * 100
-          : 0
-      );
-      setBackgroundBar('#B672FF');
-      setTime({
-        ...time,
-        min: track.current!.currentTime / 60,
-        sec: track.current!.currentTime % 60,
-      });
-    };
-  }
-
-  if (track.current) {
-    track.current.oncanplay = () => {
-      setTime({
-        ...time,
-        minDuration: track.current!.duration / 60,
-        secDuration: track.current!.duration % 60,
-      });
-    };
-  }
 
   const handleTime = (e: React.MouseEvent<HTMLDivElement>) => {
     const widthCurrent: number =
       ((e.clientX - ref.current!.offsetLeft) / ref.current!.offsetWidth) * 100;
     setWidthBar(widthCurrent);
     setBackgroundBar('#B672FF');
-    track.current!.currentTime = widthCurrent * track.current!.duration * 0.01;
+    track!.currentTime = widthCurrent * track!.duration * 0.01;
   };
 
   return (
-    <>
-      <div className={styles.time}>
-        {time.min.toFixed()}мин. {time.sec.toFixed()}сек. из <br />
-        {time.minDuration.toFixed()}.{time.secDuration.toFixed()}
-      </div>
-      <div
-        className={styles.barPlayerProgress}
-        ref={ref}
-        onClick={e => handleTime(e)}
-      >
-        <span style={{ width: widthBar + '%', background: backgroundBar }} />
-        <span />
-      </div>
-    </>
+    <div
+      className={styles.barPlayerProgress}
+      ref={ref}
+      onClick={e => handleTime(e)}
+    >
+      <span style={{ width: widthBar + '%', background: backgroundBar }} />
+      <span />
+    </div>
   );
 };
 
-export default ProgressBar;
+export const TrackTime = ({ time }: timeProps) => {
+  return (
+    <div className={styles.playerTime}>
+      <div className={styles.time}>
+        <span>
+          {Number(time.min.toFixed()) < 10
+            ? '0' + time.min.toFixed()
+            : time.min.toFixed()}
+          .
+        </span>
+        <span>
+          {Number(time.sec.toFixed()) < 10
+            ? '0' + time.sec.toFixed()
+            : time.sec.toFixed()}{' '}
+          :
+        </span>
+        <span>
+          {Number(time.minDuration.toFixed()) < 10
+            ? '0' + time.minDuration.toFixed()
+            : time.minDuration.toFixed()}
+          .
+        </span>
+        <span>
+          {Number(time.secDuration.toFixed()) < 10
+            ? '0' + time.secDuration.toFixed()
+            : time.secDuration.toFixed()}
+        </span>
+      </div>
+    </div>
+  );
+};

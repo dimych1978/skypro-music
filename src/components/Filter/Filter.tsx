@@ -3,12 +3,11 @@ import React from 'react';
 import styles from './Filter.module.css';
 import DropMenu from './Dropmenu';
 import { TrackType } from '@/types';
+import { useAppSelector } from '@/store/store';
 
-type FilterProps = {
-  tracks: TrackType[];
-};
+const Filter = () => {
+  const {tracks} = useAppSelector(state => state.tracksSlice);
 
-const Filter: React.FC<FilterProps> = ({ tracks }) => {
   const [activeFilter, setActiveFilter] = React.useState<string | null>(null);
 
   const unique = <T, K extends keyof T>(items: T[], property: K): string[] => {
