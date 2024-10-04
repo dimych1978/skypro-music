@@ -1,6 +1,5 @@
 'use client';
 
-// import { TrackType } from '@/types';
 import styles from './PlayerBar.module.css';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { ProgressBar, TrackTime } from './ProgressBar';
@@ -14,8 +13,6 @@ import {
 } from '@/store/features/trackSlice';
 import { useLikeTrack } from '@/hooks/useLikeTrack';
 
-// type props = { thisTrack: TrackType };
-
 export type TimeType = {
   min: number;
   sec: number;
@@ -25,7 +22,6 @@ export type TimeType = {
 
 const PlayerBar = () => {
   const { thisTrack } = useAppSelector(state => state.tracksSlice);
-  // const { name, author, track_file } = thisTrack;
   const { isShuffle, isPlaying } = useAppSelector(state => state.tracksSlice);
   const { isLiked, handleLike } = useLikeTrack(thisTrack ? thisTrack._id : 1);
 
@@ -113,33 +109,27 @@ const PlayerBar = () => {
     };
   }
 
+  if (!thisTrack) return;
+
   return (
-    <div
-      className={styles.bar}
-      style={thisTrack ? { display: 'block' } : { display: 'none' }}
-    >
-      {thisTrack && (
-        <audio
-          ref={ref}
-          src={thisTrack.track_file}
-          controls
-          style={{ display: 'none' }}
-          onEnded={handleEnd}
-        />
-      )}
+    <div className={styles.bar}>
+      <audio
+        ref={ref}
+        src={thisTrack.track_file}
+        controls
+        style={{ display: 'none' }}
+        onEnded={handleEnd}
+      />
       <div className={styles.barContent}>
-        {thisTrack && (
-          <>
-            <TrackTime time={time} />
-            <ProgressBar
-              widthBar={widthBar}
-              backgroundBar={backgroundBar}
-              setWidthBar={setWidthBar}
-              setBackgroundBar={setBackgroundBar}
-              track={ref.current}
-            />
-          </>
-        )}
+        <TrackTime time={time} />
+        <ProgressBar
+          widthBar={widthBar}
+          backgroundBar={backgroundBar}
+          setWidthBar={setWidthBar}
+          setBackgroundBar={setBackgroundBar}
+          track={ref.current}
+        />
+
         <div className={styles.barPlayerBlock}>
           <div className={styles.barPlayer}>
             <div className={styles.playerControls}>
@@ -196,26 +186,25 @@ const PlayerBar = () => {
                 </svg>
               </div>
             </div>
+
             <div className={styles.playerTrackPlay}>
-              {thisTrack && (
-                <div className={styles.trackPlayContain}>
-                  <div className={styles.trackPlayImage}>
-                    <svg className={styles.trackPlaySvg}>
-                      <use xlinkHref='/img/icon/sprite.svg#icon-note'></use>
-                    </svg>
-                  </div>
-                  <div className={styles.trackPlayAuthor}>
-                    <a className={styles.trackPlayAuthorLink} href='http://'>
-                      {thisTrack.name}
-                    </a>
-                  </div>
-                  <div className={styles.trackPlayAlbum}>
-                    <a className={styles.trackPlayAlbumLink} href='http://'>
-                      {thisTrack.author}
-                    </a>
-                  </div>
+              <div className={styles.trackPlayContain}>
+                <div className={styles.trackPlayImage}>
+                  <svg className={styles.trackPlaySvg}>
+                    <use xlinkHref='/img/icon/sprite.svg#icon-note'></use>
+                  </svg>
                 </div>
-              )}
+                <div className={styles.trackPlayAuthor}>
+                  <a className={styles.trackPlayAuthorLink} href='http://'>
+                    {thisTrack.name}
+                  </a>
+                </div>
+                <div className={styles.trackPlayAlbum}>
+                  <a className={styles.trackPlayAlbumLink} href='http://'>
+                    {thisTrack.author}
+                  </a>
+                </div>
+              </div>
 
               <div className={styles.trackPlayLikeDis}>
                 <div
@@ -229,17 +218,10 @@ const PlayerBar = () => {
                     <use xlinkHref='/img/icon/sprite.svg#icon-like'></use>
                   </svg>
                 </div>
-                {/* <div
-                  className={`${styles.trackPlayDislike}  btnIcon`}
-                  onClick={handleDisLike}
-                >
-                  <svg className={styles.trackPlayDislikeSvg}>
-                    <use xlinkHref='/img/icon/sprite.svg#icon-dislike'></use>
-                  </svg>
-                </div> */}
               </div>
             </div>
           </div>
+
           <div className={styles.barVolumeBlock}>
             <div className={styles.volumeContent}>
               <div className={styles.volumeImage}>

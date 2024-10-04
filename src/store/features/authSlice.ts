@@ -122,8 +122,8 @@ const authSlice = createSlice({
       (state, action: PayloadAction<TokensType>) => {
         state.token.access = action.payload.access;
         state.token.refresh = action.payload.refresh;
-        // localStorage.setItem('access', action.payload.access);
-        // localStorage.setItem('refresh', action.payload.refresh);
+        localStorage.setItem('access', action.payload.access);
+        localStorage.setItem('refresh', action.payload.refresh);
       }
     );
 

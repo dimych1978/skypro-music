@@ -3,7 +3,6 @@ import { useLikeTrack } from '@/hooks/useLikeTrack';
 import { setThisTrack } from '@/store/features/trackSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { TrackType } from '@/types';
-import Link from 'next/link';
 import { useState } from 'react';
 
 const TrackItem = ({ track }: { track: TrackType }) => {
