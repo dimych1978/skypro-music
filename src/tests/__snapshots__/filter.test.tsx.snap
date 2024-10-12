@@ -6,81 +6,55 @@ exports[`renders correctly 1`] = `
   "baseElement": <body>
     <div>
       <div
-        class="centerblockContent playlist-content"
+        class="centerblockFilter"
       >
         <div
-          class="contentTitle playlist-title"
+          class="filterTitle"
         >
-          <div
-            class="playlistTitleCol col01"
-          >
-            Трек
-          </div>
-          <div
-            class="playlistTitleCol col02"
-          >
-            Исполнитель
-          </div>
-          <div
-            class="playlistTitleCol col03"
-          >
-            Альбом
-          </div>
-          <div
-            class="playlistTitleCol col04"
-          >
-            <svg
-              class="playlistTitleSvg"
-            >
-              <use
-                xlink:href="/img/icon/sprite.svg#icon-watch"
-              />
-            </svg>
-          </div>
+          Искать по:
         </div>
         <div
-          class="contentPlaylist playlist"
-        />
+          class="filterButton"
+        >
+          исполнителю
+        </div>
+        <div
+          class="filterButton"
+        >
+          году выпуска
+        </div>
+        <div
+          class="filterButton"
+        >
+          жанру
+        </div>
       </div>
     </div>
   </body>,
   "container": <div>
     <div
-      class="centerblockContent playlist-content"
+      class="centerblockFilter"
     >
       <div
-        class="contentTitle playlist-title"
+        class="filterTitle"
       >
-        <div
-          class="playlistTitleCol col01"
-        >
-          Трек
-        </div>
-        <div
-          class="playlistTitleCol col02"
-        >
-          Исполнитель
-        </div>
-        <div
-          class="playlistTitleCol col03"
-        >
-          Альбом
-        </div>
-        <div
-          class="playlistTitleCol col04"
-        >
-          <svg
-            class="playlistTitleSvg"
-          >
-            <use
-              xlink:href="/img/icon/sprite.svg#icon-watch"
-            />
-          </svg>
-        </div>
+        Искать по:
       </div>
       <div
-        class="contentPlaylist playlist"
-      />
+        class="filterButton"
+      >
+        исполнителю
+      </div>
+      <div
+        class="filterButton"
+      >
+        году выпуска
+      </div>
+      <div
+        class="filterButton"
+      >
+        жанру
+      </div>
     </div>
   </div>,
   "debug": [Function],
