@@ -2,7 +2,6 @@
 
 import { FormEvent, useEffect, useState } from 'react';
 import styles from './entry.module.css';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import {
@@ -40,7 +39,7 @@ const Form = () => {
       ).unwrap();
       router.push('/trackPages');
     } catch (error) {
-      if (error instanceof Error) console.log(error);
+      if (error instanceof Error) console.warn(error);
     }
   };
 

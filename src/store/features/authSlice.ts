@@ -130,7 +130,6 @@ const authSlice = createSlice({
     builder.addCase(
       updateTokenThunk.fulfilled,
       (state, action: PayloadAction<string>) => {
-        console.log('updateTokenThunk', action.payload);
         state.authState = true;
         state.token.access = action.payload;
         localStorage.setItem('access', action.payload);
@@ -148,20 +147,20 @@ const authSlice = createSlice({
       state.status = 'rejected';
 
       state.error = action.error.message || '';
-      console.log('🚀 ~ builder.addCase ~ state.error:', state.error);
+      console.warn('🚀 ~ builder.addCase ~ state.error:', state.error);
     });
     builder.addCase(loginUser.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.error.message || '';
-      console.log('🚀 ~ builder.addCase ~ state.error:', state.error);
-      console.log(action.error);
+      console.warn('🚀 ~ builder.addCase ~ state.error:', state.error);
+      console.warn(action.error);
     });
 
     builder.addCase(addFavoriteTracks.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.error.message || '';
-      console.log('🚀 ~ builder.addCase ~ state.error:', state.error);
-      console.log(action.error);
+      console.warn('🚀 ~ builder.addCase ~ state.error:', state.error);
+      console.warn(action.error);
     });
   },
 });

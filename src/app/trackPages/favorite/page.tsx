@@ -14,6 +14,7 @@ function Favorite() {
   useEffect(() => {
     setUser(true);
   }, []);
+
   return (
     <>
       <h2 className={styles.centerblock__h2}>Мои треки</h2>
