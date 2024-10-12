@@ -3,15 +3,17 @@
 import Image from 'next/image';
 import styes from './Sidebar.module.css';
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import { errorNull, loginUser } from '@/store/features/authSlice';
+import { errorNull } from '@/store/features/authSlice';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 const Sidebar = () => {
-  const { username } = useAppSelector(state => state.auth);
-  const [user, setUser] = useState('');
   const dispatch = useAppDispatch();
   const router = useRouter();
+
+  const { username } = useAppSelector(state => state.auth);
+  const [user, setUser] = useState('');
 
   useEffect(() => {
     if (username) setUser(username);
@@ -36,7 +38,7 @@ const Sidebar = () => {
       <div className={styes.sidebarBlock}>
         <div className={styes.sidebarList}>
           <div className={styes.sidebarItem}>
-            <a className={styes.sidebarLink} href='#'>
+            <Link className={styes.sidebarLink} href='/trackPages/selection/2'>
               <Image
                 className={styes.sidebarImg}
                 src='/img/playlist01.png'
@@ -45,10 +47,10 @@ const Sidebar = () => {
                 height={170}
                 priority={true}
               />
-            </a>
+            </Link>
           </div>
           <div className={styes.sidebarItem}>
-            <a className={styes.sidebarLink} href='#'>
+            <Link className={styes.sidebarLink} href='/trackPages/selection/3'>
               <Image
                 className={styes.sidebarImg}
                 src='/img/playlist02.png'
@@ -56,10 +58,10 @@ const Sidebar = () => {
                 width={250}
                 height={170}
               />
-            </a>
+            </Link>
           </div>
           <div className={styes.sidebarItem}>
-            <a className={styes.sidebarLink} href='#'>
+            <Link className={styes.sidebarLink} href='/trackPages/selection/4'>
               <Image
                 className={styes.sidebarImg}
                 src='/img/playlist03.png'
@@ -67,7 +69,7 @@ const Sidebar = () => {
                 width={250}
                 height={170}
               />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

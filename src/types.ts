@@ -10,3 +10,8 @@ export type TrackType = {
   track_file: string;
   _id: number;
 };
+
+export type SelectType = {
+  _id: number;
+  items: number[];
+};
