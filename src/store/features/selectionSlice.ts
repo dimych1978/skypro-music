@@ -4,12 +4,12 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type InitialSelectionType = {
   selectionArray: SelectType[];
-  //   selectionTracks: TrackType[];
+  selectionTracks: TrackType[];
 };
 
 const initialState: InitialSelectionType = {
   selectionArray: [],
-  //   selectionTracks: [],
+  selectionTracks: [],
 };
 
 export const addSelectionTracks = createAsyncThunk('selection', async () => {
@@ -20,14 +20,15 @@ const selectionSlice = createSlice({
   name: 'selection',
   initialState,
   reducers: {
-    // setSelectionTracks(state, action) {
-    //   state.selectionTracks = action.payload;
-    // },
+    setSelectionTracks(state, action) {
+      state.selectionTracks = action.payload;
+    },
   },
   extraReducers: builder => {
     builder.addCase(
       addSelectionTracks.fulfilled,
       (state, action: PayloadAction<SelectType[]>) => {
+        console.log('action.payload', action.payload);
         const arrayOfSelect = action.payload.map(item => ({
           _id: item._id,
           items: item.items,
@@ -42,5 +43,5 @@ const selectionSlice = createSlice({
   },
 });
 
-// export const { setSelectionTracks } = selectionSlice.actions;
+export const { setSelectionTracks } = selectionSlice.actions;
 export const SelectionReducer = selectionSlice.reducer;
