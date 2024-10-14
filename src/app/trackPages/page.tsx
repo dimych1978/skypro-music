@@ -23,16 +23,13 @@ function Base() {
     }
   }, []);
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        await dispatch(addSelectionTracks()).unwrap();
-      } catch (error) {
-        console.warn(error);
-      }
-    };
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   try {
+  //     dispatch(addSelectionTracks()).unwrap();
+  //   } catch (error) {
+  //     console.warn(error);
+  //   }
+  // }, []);
 
   return (
     <>
