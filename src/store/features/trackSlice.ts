@@ -9,6 +9,7 @@ type initialStateType = {
   isPlaying: boolean;
   id: number | null;
   isFav: number[];
+  selectTracks: TrackType[];
 };
 
 const initialState: initialStateType = {
@@ -19,6 +20,7 @@ const initialState: initialStateType = {
   isPlaying: false,
   id: null,
   isFav: [],
+  selectTracks: [],
 };
 
 const trackSlice = createSlice({

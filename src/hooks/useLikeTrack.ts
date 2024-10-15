@@ -34,7 +34,7 @@ export const useLikeTrack = (id: number) => {
           dispatch(setDislikeTracks(id));
         } else dispatch(setLikeTracks(id));
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
   };
   return { isLiked, handleLike };
