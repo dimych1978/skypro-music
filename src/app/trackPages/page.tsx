@@ -5,7 +5,6 @@ import styles from '../page.module.css';
 import Centerblock from '@/components/Centerblock/Centerblock';
 import { useEffect } from 'react';
 import { addFavoriteTracks } from '@/store/features/authSlice';
-import { addSelectionTracks } from '@/store/features/selectionSlice';
 
 function Base() {
   const { token } = useAppSelector(state => state.auth);
@@ -22,14 +21,6 @@ function Base() {
       console.warn(error);
     }
   }, []);
-
-  // useEffect(() => {
-  //   try {
-  //     dispatch(addSelectionTracks()).unwrap();
-  //   } catch (error) {
-  //     console.warn(error);
-  //   }
-  // }, []);
 
   return (
     <>

@@ -12,6 +12,7 @@ import {
   setShuffle,
 } from '@/store/features/trackSlice';
 import { useLikeTrack } from '@/hooks/useLikeTrack';
+import { error } from 'console';
 
 export type TimeType = {
   min: number;
@@ -21,7 +22,7 @@ export type TimeType = {
 };
 
 const PlayerBar = () => {
-  const { thisTrack, tracks } = useAppSelector(state => state.tracksSlice);
+  const { thisTrack } = useAppSelector(state => state.tracksSlice);
   const { isShuffle, isPlaying } = useAppSelector(state => state.tracksSlice);
   const { isLiked, handleLike } = useLikeTrack(thisTrack ? thisTrack._id : 1);
 
@@ -40,7 +41,6 @@ const PlayerBar = () => {
   const [repeat, setRepeat] = useState(false);
 
   const next = () => {
-    console.log('tracks playerbar', tracks);
     dispatch(setNextTrack());
   };
 
@@ -70,8 +70,14 @@ const PlayerBar = () => {
   };
 
   useEffect(() => {
-    ref.current?.play();
-    dispatch(setIsPlaying(true));
+    ref.current
+      ?.play()
+      .then(() => {
+        dispatch(setIsPlaying(true));
+      })
+      .catch(error => {
+        if (error.name !== 'AbortError') console.log(error);
+      });
   }, [thisTrack, dispatch]);
 
   const handleEnd = () => {

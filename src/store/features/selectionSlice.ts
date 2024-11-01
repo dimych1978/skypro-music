@@ -12,10 +12,6 @@ const initialState: InitialSelectionType = {
   selectionTracks: [],
 };
 
-export const addSelectionTracks = createAsyncThunk('selection', async () => {
-  return await getSelectionTracks();
-});
-
 const selectionSlice = createSlice({
   name: 'selection',
   initialState,

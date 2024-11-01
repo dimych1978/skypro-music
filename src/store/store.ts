@@ -7,14 +7,12 @@ import {
   useStore,
 } from 'react-redux';
 import { TrackReducer } from './features/trackSlice';
-import { SelectionReducer } from './features/selectionSlice';
 
 export const makeStore = () => {
   return configureStore({
     reducer: combineReducers({
       auth: AuthReducer,
       tracksSlice: TrackReducer,
-      selectionSlice: SelectionReducer,
     }),
   });
 };
