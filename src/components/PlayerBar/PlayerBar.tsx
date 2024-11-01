@@ -12,7 +12,6 @@ import {
   setShuffle,
 } from '@/store/features/trackSlice';
 import { useLikeTrack } from '@/hooks/useLikeTrack';
-import { error } from 'console';
 
 export type TimeType = {
   min: number;
