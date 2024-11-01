@@ -1,5 +1,6 @@
-import { TrackType } from '@/types';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getSelectionTracks } from '@/api/selectionApi';
+import { SelectType, TrackType } from '@/types';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type initialStateType = {
   tracks: TrackType[];
@@ -9,7 +10,8 @@ type initialStateType = {
   isPlaying: boolean;
   id: number | null;
   isFav: number[];
-  selectTracks: TrackType[];
+  selectTracks: number[];
+  selectTitles: string[];
 };
 
 const initialState: initialStateType = {
@@ -21,7 +23,15 @@ const initialState: initialStateType = {
   id: null,
   isFav: [],
   selectTracks: [],
+  selectTitles: [],
 };
+
+export const addSelectionTracks = createAsyncThunk(
+  'selection',
+  async (id: string) => {
+    return await getSelectionTracks(id);
+  }
+);
 
 const trackSlice = createSlice({
   name: 'track',
@@ -34,6 +44,14 @@ const trackSlice = createSlice({
 
     setThisTrack: (state, action: PayloadAction<TrackType | null>) => {
       state.thisTrack = action.payload;
+      if (state.selectTracks.length > 0) {
+        state.tracks = state.tracks.filter(item =>
+          state.selectTracks.includes(item._id)
+        );
+        state.defaultTracks = state.defaultTracks.filter(item =>
+          state.selectTracks.includes(item._id)
+        );
+      }
     },
 
     setFavTracks: (state, action: PayloadAction<TrackType[]>) => {
@@ -84,6 +102,15 @@ const trackSlice = createSlice({
     setDislikeTracks: (state, action: PayloadAction<number>) => {
       state.isFav = state.isFav.filter(el => el !== action.payload);
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(
+      addSelectionTracks.fulfilled,
+      (state, action: PayloadAction<SelectType>) => {
+        state.selectTracks = action.payload.items;
+        state.selectTitles = action.payload.name;
+      }
+    );
   },
 });
 

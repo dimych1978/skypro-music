@@ -1,62 +1,46 @@
 'use client';
 
-import styles from '@/app/page.module.css';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Select from '@/components/Select/Select';
 import { useGetTracks } from '@/hooks/useGetTracks';
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import {
-  addSelectionTracks,
-  setSelectionTracks,
-} from '@/store/features/selectionSlice';
+import { addSelectionTracks } from '@/store/features/trackSlice';
+
+type IdType = {
+  id: string;
+};
 
 function Selection() {
   const dispatch = useAppDispatch();
-  const { selectionTracks, selectionArray } = useAppSelector(
-    state => state.selectionSlice
-  );
   const { getAllTracks } = useGetTracks();
   const [title, setTitle] = useState('');
-  const id = useParams().id;
+  const { id } = useParams<IdType>();
 
   useEffect(() => {
-    console.log(
-      '🚀 ~ Selection ~ selectionTracks:',
-      selectionTracks,
-      'array',
-      selectionArray.map(item => item.items)
-    );
-    // dispatch(setSelectionTracks(selectionArray.map(item => item.items)));
     const getData = async () => {
       try {
         await getAllTracks();
-        await dispatch(addSelectionTracks()).unwrap();
-        console.log('selectionArray', selectionArray);
+        await dispatch(addSelectionTracks(id)).unwrap();
       } catch (error) {
         console.warn(error);
       }
     };
     getData();
 
-    switch (+id) {
-      case 2:
-        setTitle('Плейлист дня');
-        break;
-      case 3:
-        setTitle('100 Танцевальных хитов');
-        break;
-      case 4:
-        setTitle('Инди-заряд');
-        break;
-    }
+    // switch (+id) {
+    //   case 2:
+    //     setTitle('Плейлист дня');
+    //     break;
+    //   case 3:
+    //     setTitle('100 Танцевальных хитов');
+    //     break;
+    //   case 4:
+    //     setTitle('Инди-заряд');
+    //     break;
+    // }
   }, []);
 
-  return (
-    <>
-      <h2 className={styles.centerblock__h2}>{title}</h2>
-      <Select />
-    </>
-  );
+  return <Select />;
 }
 export default Selection;

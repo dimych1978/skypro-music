@@ -12,6 +12,6 @@ export type TrackType = {
 };
 
 export type SelectType = {
-  _id: number;
+  name: string[];
   items: number[];
 };
