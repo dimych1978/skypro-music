@@ -1,6 +1,11 @@
 import { getSelectionTracks } from '@/api/selectionApi';
 import { SelectType, TrackType } from '@/types';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSlice,
+  current,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 
 type initialStateType = {
   tracks: TrackType[];
@@ -66,6 +71,7 @@ const trackSlice = createSlice({
 
     setNextTrack: state => {
       const playlist = !state.isShuffle ? state.tracks : state.defaultTracks;
+      console.log(current(playlist));
 
       const index = playlist.findIndex(
         item => item._id === state.thisTrack!._id
