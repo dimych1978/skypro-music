@@ -7,15 +7,28 @@ import { errorNull } from '@/store/features/authSlice';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useGetTracks } from '@/hooks/useGetTracks';
+import { setTrackState } from '@/store/features/trackSlice';
+import { TrackType } from '@/types';
 
 const Sidebar = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const { getAllTracks } = useGetTracks();
 
   const { username } = useAppSelector(state => state.auth);
   const [user, setUser] = useState('');
 
   useEffect(() => {
+    try {
+      const getData = async () => {
+        const data = (await getAllTracks()) as TrackType[];
+        dispatch(setTrackState(data));
+      };
+      getData();
+    } catch (error) {
+      console.log(error);
+    }
     if (username) setUser(username);
   }, []);
 

@@ -3,11 +3,9 @@ import { useLikeTrack } from '@/hooks/useLikeTrack';
 import { setThisTrack } from '@/store/features/trackSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { TrackType } from '@/types';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const TrackItem = ({ track }: { track: TrackType }) => {
-  // const { tracks } = useAppSelector(state => state.tracksSlice);
-  // useEffect(() => console.log('🚀 ~ TrackItem ~ tracks:', tracks), []);
   const dispatch = useAppDispatch();
   const { isPlaying, thisTrack } = useAppSelector(state => state.tracksSlice);
 

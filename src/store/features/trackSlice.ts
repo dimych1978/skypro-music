@@ -15,7 +15,8 @@ type initialStateType = {
   isPlaying: boolean;
   id: number | null;
   isFav: number[];
-  selectTracks: number[];
+  selectArray: number[];
+  selectTracks: TrackType[];
   selectTitles: string[];
 };
 
@@ -27,6 +28,7 @@ const initialState: initialStateType = {
   isPlaying: false,
   id: null,
   isFav: [],
+  selectArray: [],
   selectTracks: [],
   selectTitles: [],
 };
@@ -45,16 +47,17 @@ const trackSlice = createSlice({
     setTrackState: (state, action: PayloadAction<TrackType[]>) => {
       state.tracks = action.payload;
       state.defaultTracks = action.payload;
+      state.selectTracks = action.payload;
     },
 
     setThisTrack: (state, action: PayloadAction<TrackType | null>) => {
       state.thisTrack = action.payload;
-      if (state.selectTracks.length > 0) {
-        state.tracks = state.tracks.filter(item =>
-          state.selectTracks.includes(item._id)
+      if (state.selectArray.length > 0) {
+        state.selectTracks = state.tracks.filter(item =>
+          state.selectArray.includes(item._id)
         );
-        state.defaultTracks = state.defaultTracks.filter(item =>
-          state.selectTracks.includes(item._id)
+        state.defaultTracks = state.tracks.filter(item =>
+          state.selectArray.includes(item._id)
         );
       }
     },
@@ -70,8 +73,9 @@ const trackSlice = createSlice({
     },
 
     setNextTrack: state => {
-      const playlist = !state.isShuffle ? state.tracks : state.defaultTracks;
-      console.log(current(playlist));
+      const playlist = !state.isShuffle
+        ? state.selectTracks
+        : state.defaultTracks;
 
       const index = playlist.findIndex(
         item => item._id === state.thisTrack!._id
@@ -82,7 +86,9 @@ const trackSlice = createSlice({
     },
 
     setPreviousTrack: state => {
-      const playlist = !state.isShuffle ? state.tracks : state.defaultTracks;
+      const playlist = !state.isShuffle
+        ? state.selectTracks
+        : state.defaultTracks;
 
       const index = playlist.findIndex(
         item => item._id === state.thisTrack!._id
@@ -113,7 +119,7 @@ const trackSlice = createSlice({
     builder.addCase(
       addSelectionTracks.fulfilled,
       (state, action: PayloadAction<SelectType>) => {
-        state.selectTracks = action.payload.items;
+        state.selectArray = action.payload.items;
         state.selectTitles = action.payload.name;
       }
     );
