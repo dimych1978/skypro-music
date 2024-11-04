@@ -61,7 +61,9 @@ const PlayerBar = () => {
   };
 
   const handleVolume = (e: ChangeEvent<HTMLInputElement>) => {
-    if (ref.current) ref.current.volume = Number(e.target.value) * 0.01;
+    if (ref.current) {
+      ref.current.volume = Number(e.target.value) * 0.01;
+    }
   };
 
   const handleRepeat = () => {
@@ -72,6 +74,7 @@ const PlayerBar = () => {
     ref.current
       ?.play()
       .then(() => {
+        ref.current.volume = 0.2;
         dispatch(setIsPlaying(true));
       })
       .catch(error => {
@@ -92,7 +95,7 @@ const PlayerBar = () => {
     ref.current.oncanplay = () => {
       setTime({
         ...time,
-        minDuration: ref.current.duration / 60,
+        minDuration: Math.floor(ref.current.duration / 60),
         secDuration: ref.current.duration % 60,
       });
     };
