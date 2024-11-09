@@ -56,7 +56,7 @@ export const TrackTime = ({ time }: timeProps) => {
         <span>
           {Number(time.sec.toFixed()) < 10
             ? '0' + time.sec.toFixed()
-            : time.sec.toFixed()}{' '}
+            : time.sec.toFixed()}
           :
         </span>
         <span>

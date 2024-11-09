@@ -4,7 +4,7 @@ import './globals.css';
 import ReduxProvider from '@/store/ReduxProvider';
 import styles from './page.module.css';
 
-const inter = Montserrat({ subsets: ['cyrillic'] });
+const inter = Montserrat({ subsets: ['cyrillic-ext'] });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
