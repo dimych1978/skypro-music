@@ -1,5 +1,11 @@
-import { TrackType } from '@/types';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getSelectionTracks } from '@/api/selectionApi';
+import { SelectType, TrackType } from '@/types';
+import {
+  createAsyncThunk,
+  createSlice,
+  current,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 
 type initialStateType = {
   tracks: TrackType[];
@@ -9,6 +15,9 @@ type initialStateType = {
   isPlaying: boolean;
   id: number | null;
   isFav: number[];
+  selectArray: number[];
+  selectTracks: TrackType[];
+  selectTitles: string[];
 };
 
 const initialState: initialStateType = {
@@ -19,7 +28,17 @@ const initialState: initialStateType = {
   isPlaying: false,
   id: null,
   isFav: [],
+  selectArray: [],
+  selectTracks: [],
+  selectTitles: [],
 };
+
+export const addSelectionTracks = createAsyncThunk(
+  'selection',
+  async (id: string) => {
+    return await getSelectionTracks(id);
+  }
+);
 
 const trackSlice = createSlice({
   name: 'track',
@@ -28,10 +47,19 @@ const trackSlice = createSlice({
     setTrackState: (state, action: PayloadAction<TrackType[]>) => {
       state.tracks = action.payload;
       state.defaultTracks = action.payload;
+      state.selectTracks = action.payload;
     },
 
     setThisTrack: (state, action: PayloadAction<TrackType | null>) => {
       state.thisTrack = action.payload;
+      if (state.selectArray.length > 0) {
+        state.selectTracks = state.tracks.filter(item =>
+          state.selectArray.includes(item._id)
+        );
+        state.defaultTracks = state.tracks.filter(item =>
+          state.selectArray.includes(item._id)
+        );
+      }
     },
 
     setFavTracks: (state, action: PayloadAction<TrackType[]>) => {
@@ -45,7 +73,9 @@ const trackSlice = createSlice({
     },
 
     setNextTrack: state => {
-      const playlist = !state.isShuffle ? state.tracks : state.defaultTracks;
+      const playlist = !state.isShuffle
+        ? state.selectTracks
+        : state.defaultTracks;
 
       const index = playlist.findIndex(
         item => item._id === state.thisTrack!._id
@@ -56,7 +86,9 @@ const trackSlice = createSlice({
     },
 
     setPreviousTrack: state => {
-      const playlist = !state.isShuffle ? state.tracks : state.defaultTracks;
+      const playlist = !state.isShuffle
+        ? state.selectTracks
+        : state.defaultTracks;
 
       const index = playlist.findIndex(
         item => item._id === state.thisTrack!._id
@@ -82,6 +114,15 @@ const trackSlice = createSlice({
     setDislikeTracks: (state, action: PayloadAction<number>) => {
       state.isFav = state.isFav.filter(el => el !== action.payload);
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(
+      addSelectionTracks.fulfilled,
+      (state, action: PayloadAction<SelectType>) => {
+        state.selectArray = action.payload.items;
+        state.selectTitles = action.payload.name;
+      }
+    );
   },
 });
 

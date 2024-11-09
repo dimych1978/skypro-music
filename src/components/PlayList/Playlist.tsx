@@ -6,17 +6,17 @@ import TrackItem from '../TrackItem/TrackItem';
 import { setFavTracks } from '@/store/features/trackSlice';
 
 const Playlist = () => {
-  const { tracks } = useAppSelector(state => state.tracksSlice);
-  const { favorite } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
+
+  const { selectTracks } = useAppSelector(state => state.tracksSlice);
+  const { favorite } = useAppSelector(state => state.auth);
 
   useEffect(() => {
     dispatch(setFavTracks(favorite));
-  }, [favorite]);
-
+  }, [favorite, dispatch]);
   return (
     <div className={`${styles.contentPlaylist} playlist`}>
-      {tracks.map(track => (
+      {selectTracks.map(track => (
         <TrackItem key={track._id} track={track} />
       ))}
     </div>

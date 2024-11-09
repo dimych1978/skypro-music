@@ -9,18 +9,19 @@ import { useEffect, useState } from 'react';
 function Favorite() {
   const router = useRouter();
   const [user, setUser] = useState(false);
+  const favorite = useAppSelector(state => state.auth);
 
   const { token } = useAppSelector(state => state.auth);
   useEffect(() => {
+    console.log(favorite);
     setUser(true);
   }, []);
+
   return (
     <>
       <h2 className={styles.centerblock__h2}>Мои треки</h2>
       {user && token.access ? (
-        <>
-          <Fav />
-        </>
+        <Fav />
       ) : (
         <>
           <span

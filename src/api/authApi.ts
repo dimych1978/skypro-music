@@ -24,7 +24,7 @@ export const createUser = async ({ email, password }: RegistryUserType) => {
   });
   const data = await response.json();
   if (response.status === 403) {
-    console.log(response.status);
+    console.warn(response.status);
     throw new Error(data.message);
   }
 
