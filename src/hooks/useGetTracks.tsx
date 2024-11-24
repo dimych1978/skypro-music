@@ -7,7 +7,6 @@ export const useGetTracks = () => {
   const getAllTracks = async () => {
     try {
       const data = await getTracks();
-      // dispatch(setTrackState(data));
       return data;
     } catch (error: unknown) {
       if (error instanceof Error) {

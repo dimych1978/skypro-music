@@ -15,6 +15,7 @@ export default function ErrorPage({
 
   useEffect(() => {
     console.error(error);
+    reset;
   }, [error]);
 
   return (

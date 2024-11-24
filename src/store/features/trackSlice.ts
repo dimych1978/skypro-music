@@ -18,6 +18,13 @@ type initialStateType = {
   selectArray: number[];
   selectTracks: TrackType[];
   selectTitles: string[];
+  filters: {
+    author: string[];
+    genre: string[];
+    letters: string;
+    sort: string;
+  };
+  filteredTracks: TrackType[];
 };
 
 const initialState: initialStateType = {
@@ -31,6 +38,8 @@ const initialState: initialStateType = {
   selectArray: [],
   selectTracks: [],
   selectTitles: [],
+  filters: { author: [], genre: [], letters: '', sort: 'По умолчанию' },
+  filteredTracks: [],
 };
 
 export const addSelectionTracks = createAsyncThunk(
@@ -114,6 +123,39 @@ const trackSlice = createSlice({
     setDislikeTracks: (state, action: PayloadAction<number>) => {
       state.isFav = state.isFav.filter(el => el !== action.payload);
     },
+
+    setFilters: (
+      state,
+      action: PayloadAction<{
+        author?: string;
+        genre?: string;
+        sort?: string;
+        letters?: string;
+      }>
+    ) => {
+      const authorArray = state.filters.author;
+      const genreArray = state.filters.genre;
+      if (action.payload.author) {
+        !authorArray.includes(action.payload.author)
+          ? authorArray.push(action.payload.author)
+          : (state.filters.author = authorArray.filter(
+              item => item !== action.payload.author
+            ));
+      }
+      if (action.payload.genre) {
+        !genreArray.includes(action.payload.genre)
+          ? genreArray.push(action.payload.genre)
+          : (state.filters.genre = genreArray.filter(
+              item => item !== action.payload.genre
+            ));
+      }
+      if (action.payload.sort) {
+        state.filters.sort = action.payload.sort;
+      }
+      if (action.payload.letters) {
+        state.filters.letters = action.payload.letters;
+      }
+    },
   },
   extraReducers: builder => {
     builder.addCase(
@@ -137,5 +179,6 @@ export const {
   setIsPlaying,
   setLikeTracks,
   setDislikeTracks,
+  setFilters,
 } = trackSlice.actions;
 export const TrackReducer = trackSlice.reducer;

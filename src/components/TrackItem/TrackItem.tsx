@@ -53,7 +53,7 @@ const TrackItem = ({ track }: { track: TrackType }) => {
               className={styles.trackTitleLink}
               // href='http://'
             >
-              {track.author}
+              {track.name}
               <span className={styles.trackTitleSpan}></span>
             </span>
           </div>
@@ -63,7 +63,7 @@ const TrackItem = ({ track }: { track: TrackType }) => {
             className={styles.trackAuthorLink}
             // href='http://'
           >
-            {track.album}
+            {track.author}
           </span>
         </div>
         <div className={styles.trackAlbum}>
@@ -71,7 +71,7 @@ const TrackItem = ({ track }: { track: TrackType }) => {
             className={styles.trackAlbumLink}
             // href='http://'
           >
-            {track.name}
+            {track.album}
           </span>
         </div>
         <div
