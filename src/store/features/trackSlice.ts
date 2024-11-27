@@ -1,11 +1,6 @@
 import { getSelectionTracks } from '@/api/selectionApi';
 import { SelectType, TrackType } from '@/types';
-import {
-  createAsyncThunk,
-  createSlice,
-  current,
-  PayloadAction,
-} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type initialStateType = {
   tracks: TrackType[];
@@ -24,7 +19,6 @@ type initialStateType = {
     letters: string;
     sort: string;
   };
-  filteredTracks: TrackType[];
 };
 
 const initialState: initialStateType = {
@@ -39,7 +33,6 @@ const initialState: initialStateType = {
   selectTracks: [],
   selectTitles: [],
   filters: { author: [], genre: [], letters: '', sort: 'По умолчанию' },
-  filteredTracks: [],
 };
 
 export const addSelectionTracks = createAsyncThunk(
@@ -53,6 +46,7 @@ const trackSlice = createSlice({
   name: 'track',
   initialState,
   reducers: {
+    resetState: () => initialState,
     setTrackState: (state, action: PayloadAction<TrackType[]>) => {
       state.tracks = action.payload;
       state.defaultTracks = action.payload;
@@ -152,7 +146,7 @@ const trackSlice = createSlice({
       if (action.payload.sort) {
         state.filters.sort = action.payload.sort;
       }
-      if (action.payload.letters) {
+      if (action.payload.letters !== undefined) {
         state.filters.letters = action.payload.letters;
       }
     },
@@ -169,6 +163,7 @@ const trackSlice = createSlice({
 });
 
 export const {
+  resetState,
   setTrackState,
   setThisTrack,
   setFavTracks,

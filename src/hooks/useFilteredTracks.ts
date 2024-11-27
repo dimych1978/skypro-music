@@ -1,12 +1,18 @@
 import { useAppSelector } from '@/store/store';
 import { TrackType } from '@/types';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 export const useFilteredTracks = (list: TrackType[]) => {
   const { filters } = useAppSelector(state => state.tracksSlice);
 
   const authorArray = filters.author;
   const genreArray = filters.genre;
+
+  const prevFiltersRef = useRef(filters.letters);
+
+  useEffect(() => {
+    prevFiltersRef.current = filters.letters;
+  }, [filters.letters]);
 
   const filteredTracks = useMemo(() => {
     let tracksToFilter = [...list];
@@ -25,6 +31,10 @@ export const useFilteredTracks = (list: TrackType[]) => {
     if (filters.letters) {
       tracksToFilter = tracksToFilter.filter(track =>
         track.name.toLowerCase().includes(filters.letters.toLowerCase())
+      );
+    } else if (prevFiltersRef.current) {
+      tracksToFilter = tracksToFilter.filter(track =>
+        track.name.toLowerCase().includes(prevFiltersRef.current.toLowerCase())
       );
     }
 
@@ -48,7 +58,6 @@ export const useFilteredTracks = (list: TrackType[]) => {
             : true)
       );
     }
-
     return tracksToFilter;
   }, [filters, list]);
 

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-// import '../globals.css';
 import { Nav } from '@/components/Nav/Nav';
 import styles from '../page.module.css';
 import Search from '@/components/Search/Search';

@@ -2,14 +2,16 @@
 
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import styles from './Dropmenu.module.css';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { setFilters } from '@/store/features/trackSlice';
+import { useFilteredTracks } from '@/hooks/useFilteredTracks';
 
 type DropMenuProps = { list: string[]; property: string };
 const DropMenu: React.FC<DropMenuProps> = ({ list, property }) => {
   const dispatch = useAppDispatch();
-  const { filters } = useAppSelector(state => state.tracksSlice);
+  const { filters, selectTracks } = useAppSelector(state => state.tracksSlice);
   const { author, genre, sort } = filters;
+  const { filteredTracks } = useFilteredTracks(selectTracks);
 
   const addFilter = (e: React.MouseEvent) => {
     const text = e.target as HTMLDivElement;
@@ -22,10 +24,19 @@ const DropMenu: React.FC<DropMenuProps> = ({ list, property }) => {
     }
   };
 
+  const uniqueAuthors = useMemo(() => {
+    if (property === 'author') {
+      const authorsSet = new Set<string>();
+      filteredTracks.forEach(track => authorsSet.add(track.author));
+      return [...authorsSet];
+    }
+    return list;
+  }, [filteredTracks, list, property]);
+
   return (
     <div className={styles.dropMenu}>
       <div className={styles.dropMenuList}>
-        {list.map(item => (
+        {uniqueAuthors.map(item => (
           <div key={item}>
             <div
               className={

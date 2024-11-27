@@ -11,6 +11,7 @@ exports[`renders correctly 1`] = `
         <div
           class="contentTitle playlist-title"
         >
+          <span />
           <div
             class="playlistTitleCol col01"
           >
@@ -40,7 +41,11 @@ exports[`renders correctly 1`] = `
         </div>
         <div
           class="contentPlaylist playlist"
-        />
+        >
+          <h2>
+            Треки не найдены
+          </h2>
+        </div>
       </div>
     </div>
   </body>,
@@ -51,6 +56,7 @@ exports[`renders correctly 1`] = `
       <div
         class="contentTitle playlist-title"
       >
+        <span />
         <div
           class="playlistTitleCol col01"
         >
@@ -80,7 +86,11 @@ exports[`renders correctly 1`] = `
       </div>
       <div
         class="contentPlaylist playlist"
-      />
+      >
+        <h2>
+          Треки не найдены
+        </h2>
+      </div>
     </div>
   </div>,
   "debug": [Function],
