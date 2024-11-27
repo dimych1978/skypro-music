@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useGetTracks } from '@/hooks/useGetTracks';
-import { setTrackState } from '@/store/features/trackSlice';
+import { resetState, setTrackState } from '@/store/features/trackSlice';
 import { TrackType } from '@/types';
 
 const Sidebar = () => {
@@ -27,7 +27,7 @@ const Sidebar = () => {
       };
       getData();
     } catch (error) {
-      console.log(error);
+      console.warn(error);
     }
     if (username) setUser(username);
   }, []);
@@ -35,6 +35,7 @@ const Sidebar = () => {
   const logoutHandler = () => {
     localStorage.clear();
     dispatch(errorNull());
+    dispatch(resetState());
     router.push('/entryPages/login');
   };
 

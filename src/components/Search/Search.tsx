@@ -19,8 +19,7 @@ const Search = () => {
       e.type === 'click' ||
       (e.type === 'keyup' && 'key' in e && e.key === 'Enter')
     )
-      console.log('searchText', searchText);
-    dispatch(setFilters({ letters: searchText }));
+      dispatch(setFilters({ letters: searchText }));
   };
 
   return (
@@ -37,6 +36,7 @@ const Search = () => {
         type='search'
         placeholder='Поиск'
         name='search'
+        value={searchText}
         onChange={changeSearchText}
         onKeyUp={applySearchText}
       />

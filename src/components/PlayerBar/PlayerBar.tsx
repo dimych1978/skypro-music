@@ -78,7 +78,7 @@ const PlayerBar = () => {
         dispatch(setIsPlaying(true));
       })
       .catch(error => {
-        if (error.name !== 'AbortError') console.log(error);
+        if (error.name !== 'AbortError') console.warn(error);
       });
   }, [thisTrack, dispatch]);
 
@@ -101,6 +101,7 @@ const PlayerBar = () => {
     };
 
     ref.current.ontimeupdate = () => {
+      if (!ref.current) return;
       setWidthBar(
         ref.current.duration
           ? (ref.current.currentTime / ref.current.duration) * 100

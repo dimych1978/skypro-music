@@ -17,7 +17,6 @@ const Count = ({ count }: Count) => {
 
 const Filter = () => {
   const { tracks, filters } = useAppSelector(state => state.tracksSlice);
-  const { author, genre } = filters;
 
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 

@@ -29,7 +29,6 @@ export const createUser = async ({ email, password }: RegistryUserType) => {
   }
 
   if (!response.ok) {
-    console.log(data);
     if ('data' in data) {
       throw new Error(Object.values(data.data.errors).toString());
     } else {
