@@ -1,19 +1,55 @@
-// 'use client';
+'use client';
 
+import { useAppDispatch, useAppSelector } from '@/store/store';
 import styles from './Dropmenu.module.css';
-import React from 'react';
+import React, { useMemo } from 'react';
+import { setFilters } from '@/store/features/trackSlice';
+import { useFilteredTracks } from '@/hooks/useFilteredTracks';
 
-type DropMenuProps = { list: string[] };
+type DropMenuProps = { list: string[]; property: string };
+const DropMenu: React.FC<DropMenuProps> = ({ list, property }) => {
+  const dispatch = useAppDispatch();
+  const { filters, selectTracks } = useAppSelector(state => state.tracksSlice);
+  const { author, genre, sort } = filters;
+  const { filteredTracks } = useFilteredTracks(selectTracks);
 
-const DropMenu: React.FC<DropMenuProps> = ({ list }) => {
+  const addFilter = (e: React.MouseEvent) => {
+    const text = e.target as HTMLDivElement;
+    if (text.textContent) {
+      if (property === 'author')
+        dispatch(setFilters({ author: text.textContent }));
+      if (property === 'genre')
+        dispatch(setFilters({ genre: text.textContent }));
+      if (property === 'year') dispatch(setFilters({ sort: text.textContent }));
+    }
+  };
+
+  const uniqueAuthors = useMemo(() => {
+    if (property === 'author') {
+      const authorsSet = new Set<string>();
+      filteredTracks.forEach(track => authorsSet.add(track.author));
+      return [...authorsSet];
+    }
+    return list;
+  }, [filteredTracks, list, property]);
+
   return (
     <div className={styles.dropMenu}>
       <div className={styles.dropMenuList}>
-        {list.map(item => (
+        {uniqueAuthors.map(item => (
           <div key={item}>
-            <a className={styles.dropMenuText} href='http://'>
+            <div
+              className={
+                author.includes(item) ||
+                genre.includes(item) ||
+                sort.includes(item)
+                  ? styles.dropMenuTextActive
+                  : styles.dropMenuText
+              }
+              onClick={addFilter}
+            >
               {item}
-            </a>
+            </div>
           </div>
         ))}
       </div>

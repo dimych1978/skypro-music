@@ -12,6 +12,7 @@ exports[`renders correctly 1`] = `
           class="searchSvg"
         >
           <use
+            tabindex="0"
             xlink:href="/img/icon/sprite.svg#icon-search"
           />
         </svg>
@@ -20,6 +21,7 @@ exports[`renders correctly 1`] = `
           name="search"
           placeholder="Поиск"
           type="search"
+          value=""
         />
       </div>
     </div>
@@ -32,6 +34,7 @@ exports[`renders correctly 1`] = `
         class="searchSvg"
       >
         <use
+          tabindex="0"
           xlink:href="/img/icon/sprite.svg#icon-search"
         />
       </svg>
@@ -40,6 +43,7 @@ exports[`renders correctly 1`] = `
         name="search"
         placeholder="Поиск"
         type="search"
+        value=""
       />
     </div>
   </div>,

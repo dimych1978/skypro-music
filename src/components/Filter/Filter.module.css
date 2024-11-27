@@ -21,6 +21,7 @@
 }
 
 .filterButton {
+  cursor: pointer;
   width: fit-content;
   height: 39px;
   border: 1px solid #fff;
@@ -30,7 +31,14 @@
   line-height: 24px;
 }
 
+.filterButton:hover {
+  color: #9a48f1;
+  border-color: #9a48f1;
+}
+
 .filterActive {
+  cursor: pointer;
+  position: relative;
   width: fit-content;
   height: 39px;
   border: 1px solid #b672ff;
@@ -50,6 +58,9 @@
   background: #ad61ff;
   text-align: center;
   color: #fff;
+
+  font-size: 13px;
+  font-weight: 400;
 }
 
 .filterButton:not(.last-child),

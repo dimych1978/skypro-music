@@ -59,7 +59,9 @@
   background-color: #fff;
 }
 
-.dropMenuText {
+.dropMenuText,
+.dropMenuTextActive {
+  cursor: pointer;
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
@@ -68,6 +70,11 @@
   text-align: left;
 }
 
+.dropMenuTextActive {
+  color: #9a48f1;
+}
+
 .dropMenuText:hover {
+  cursor: pointer;
   color: #b672ff;
 }

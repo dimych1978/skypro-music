@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-// import '../globals.css';
 import { Nav } from '@/components/Nav/Nav';
 import styles from '../page.module.css';
 import Search from '@/components/Search/Search';
@@ -17,18 +16,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <main className={styles.main}>
-          <Nav />
-          <div className={styles.mainCenterblock}>
-            <Search />
-            {children}
-          </div>
-          <Sidebar />
-          <PlayerBar />
-        </main>
-      </div>
+    <div className={styles.container}>
+      <main className={styles.main}>
+        <Nav />
+        <div className={styles.mainCenterblock}>
+          <Search />
+          {children}
+        </div>
+        <Sidebar />
+        <PlayerBar />
+      </main>
     </div>
   );
 }

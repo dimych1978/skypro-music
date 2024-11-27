@@ -5,6 +5,7 @@ const Content = () => {
   return (
     <div className={`${styles.centerblockContent} playlist-content`}>
       <div className={`${styles.contentTitle} playlist-title`}>
+        <span />
         <div className={`${styles.playlistTitleCol} col01`}>Трек</div>
         <div className={`${styles.playlistTitleCol} col02`}>Исполнитель</div>
         <div className={`${styles.playlistTitleCol} col03`}>Альбом</div>

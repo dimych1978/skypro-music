@@ -1,7 +1,6 @@
 .wrapper {
   width: 100%;
   min-height: 100%;
-  /* overflow: hidden; */
   background-color: #383838;
 }
 
@@ -20,8 +19,6 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  /* -ms-flex-wrap: wrap; */
-  /* flex-wrap: wrap; */
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
@@ -46,4 +43,9 @@
 
 .span {
   cursor: pointer;
+}
+
+.span:hover {
+  border-bottom: 1px solid #9a48f1;
+  color: #9a48f1;
 }

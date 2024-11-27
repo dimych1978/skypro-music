@@ -9,11 +9,10 @@ import { useEffect, useState } from 'react';
 function Favorite() {
   const router = useRouter();
   const [user, setUser] = useState(false);
-  const favorite = useAppSelector(state => state.auth);
 
   const { token } = useAppSelector(state => state.auth);
+
   useEffect(() => {
-    console.log(favorite);
     setUser(true);
   }, []);
 
