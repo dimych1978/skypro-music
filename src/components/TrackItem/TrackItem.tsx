@@ -49,30 +49,17 @@ const TrackItem = ({ track }: { track: TrackType }) => {
             )}
           </div>
           <div className='track__title-text'>
-            <span
-              className={styles.trackTitleLink}
-              // href='http://'
-            >
-              {track.author}
+            <span className={styles.trackTitleLink}>
+              {track.name}
               <span className={styles.trackTitleSpan}></span>
             </span>
           </div>
         </div>
         <div className={styles.trackAuthor}>
-          <span
-            className={styles.trackAuthorLink}
-            // href='http://'
-          >
-            {track.album}
-          </span>
+          <span className={styles.trackAuthorLink}>{track.author}</span>
         </div>
         <div className={styles.trackAlbum}>
-          <span
-            className={styles.trackAlbumLink}
-            // href='http://'
-          >
-            {track.name}
-          </span>
+          <span className={styles.trackAlbumLink}>{track.album}</span>
         </div>
         <div
           onClick={e => {

@@ -1,14 +1,24 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Filter.module.css';
 import DropMenu from './Dropmenu';
-import { TrackType } from '@/types';
 import { useAppSelector } from '@/store/store';
 
-const Filter = () => {
-  const {tracks} = useAppSelector(state => state.tracksSlice);
+type Count = { count: string[] };
+type FiltersType = {
+  author: string[];
+  genre: string[];
+};
 
-  const [activeFilter, setActiveFilter] = React.useState<string | null>(null);
+const Count = ({ count }: Count) => {
+  if (!count) return null;
+  return <span className={styles.filterActiveRound}>{count.length}</span>;
+};
+
+const Filter = () => {
+  const { tracks, filters } = useAppSelector(state => state.tracksSlice);
+
+  const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
   const unique = <T, K extends keyof T>(items: T[], property: K): string[] => {
     const uniqValues = new Set<string>();
@@ -18,7 +28,7 @@ const Filter = () => {
 
   const filterYears = ['По умолчанию', 'Сначала новые', 'Сначала старые'];
 
-  const filters = [
+  const filterBlock = [
     {
       property: 'author',
       title: 'исполнителю',
@@ -35,20 +45,28 @@ const Filter = () => {
   return (
     <div className={styles.centerblockFilter}>
       <div className={styles.filterTitle}>Искать по:</div>
-      {filters.map(filter => (
-        <div
-          key={filter.property}
-          className={
-            filter.property === activeFilter
-              ? styles.filterActive
-              : styles.filterButton
-          }
-          onClick={() => handleClick(filter.property)}
-        >
-          {filter.title}
-          {activeFilter === filter.property && <DropMenu list={filter.list} />}
-        </div>
-      ))}
+      {filterBlock.map(filter => {
+        const filterProperty = filter.property as keyof FiltersType;
+        return (
+          <div
+            key={filter.property}
+            className={
+              filter.property === activeFilter
+                ? styles.filterActive
+                : styles.filterButton
+            }
+            onClick={() => handleClick(filter.property)}
+          >
+            {filter.title}
+            {activeFilter === filter.property && (
+              <>
+                <Count count={filters[filterProperty]} />
+                <DropMenu property={filter.property} list={filter.list} />
+              </>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };
