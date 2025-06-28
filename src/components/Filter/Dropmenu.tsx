@@ -24,19 +24,10 @@ const DropMenu: React.FC<DropMenuProps> = ({ list, property }) => {
     }
   };
 
-  const uniqueAuthors = useMemo(() => {
-    if (property === 'author') {
-      const authorsSet = new Set<string>();
-      filteredTracks.forEach(track => authorsSet.add(track.author));
-      return [...authorsSet];
-    }
-    return list;
-  }, [filteredTracks, list, property]);
-
   return (
     <div className={styles.dropMenu}>
       <div className={styles.dropMenuList}>
-        {uniqueAuthors.map(item => (
+        {list.map(item => (
           <div key={item}>
             <div
               className={

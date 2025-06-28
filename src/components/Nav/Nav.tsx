@@ -4,10 +4,13 @@ import Image from 'next/image';
 import styles from './Nav.module.css';
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export const Logo = () => {
+  const router = useRouter();
+
   return (
-    <div className={styles.navLogo}>
+    <div className={styles.navLogo} onClick={() => router.push('/trackPages')}>
       <Image
         className={styles.logoImage}
         src='/img/logo.png'
