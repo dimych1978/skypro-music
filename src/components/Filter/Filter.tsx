@@ -11,7 +11,7 @@ type FiltersType = {
 };
 
 const Count = ({ count }: Count) => {
-  if (!count) return null;
+  if (!count || !count.length) return null;
   return <span className={styles.filterActiveRound}>{count.length}</span>;
 };
 
@@ -58,11 +58,9 @@ const Filter = () => {
             onClick={() => handleClick(filter.property)}
           >
             {filter.title}
+            {filter.property && <Count count={filters[filterProperty]} />}
             {activeFilter === filter.property && (
-              <>
-                <Count count={filters[filterProperty]} />
                 <DropMenu property={filter.property} list={filter.list} />
-              </>
             )}
           </div>
         );
